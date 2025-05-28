@@ -1,4 +1,4 @@
-import { apiRequest } from '@/utils/apiUtils'
+import { apiRequest } from '@/common/utils/apiUtils'
 import type { Address, CreateAddressDTO, UpdateAddressDTO } from '@/types/address'
 
 /**

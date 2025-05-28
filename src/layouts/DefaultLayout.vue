@@ -8,5 +8,5 @@
 </template>
 
 <script setup lang="ts">
-import AppNavbar from '@/components/AppPublicNavbar.vue'
+import AppNavbar from '@/common/components/AppPublicNavbar.vue'
 </script>

@@ -1,4 +1,4 @@
-import { apiRequest } from '@/utils/apiUtils'
+import { apiRequest } from '@/common/utils/apiUtils'
 import type { Cart } from '@/types/cart/cart.type'
 import type { AddToCartDTO, UpdateCartItemDTO } from '@/types/cart/cart.dto'
 

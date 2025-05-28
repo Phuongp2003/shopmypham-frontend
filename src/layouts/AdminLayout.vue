@@ -8,6 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import AppNavbar from '@/components/AppNavbar.vue'
+import AppNavbar from '@/common/components/AppNavbar.vue'
 
 </script>

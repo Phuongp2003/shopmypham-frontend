@@ -1,4 +1,4 @@
-import { apiRequest } from '@/utils/apiUtils'
+import { apiRequest } from '@/common/utils/apiUtils'
 
 // Payment DTOs
 interface CreatePaymentDTO {

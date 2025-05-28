@@ -1,4 +1,4 @@
-import { apiRequest } from '@/utils/apiUtils'
+import { apiRequest } from '@/common/utils/apiUtils'
 import type { PaginatedResponse, QueryParams } from '@/types/api.type'
 import type { User } from '@/types/user/user.type'
 import type { LoginDTO, CreateUserDTO, UpdateUserDTO, TokenResponse } from '@/types/user/user.dto'

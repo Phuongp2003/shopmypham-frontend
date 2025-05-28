@@ -86,8 +86,8 @@ async function onSubmit(event: FormSubmitEvent<LoginForm>) {
               Đăng nhập bằng Google
             </UButton>
             <div class="flex justify-between">
-              <UButton variant="link" class="text-blue-500 hover:underline p-0" to="/forgot-password">Quên mật khẩu?</UButton>
-              <UButton variant="link" class="text-blue-500 hover:underline p-0" to="/register">Đăng ký</UButton>
+              <UButton variant="link" class="text-blue-500 hover:underline p-0" to="/auth/forgot-password">Quên mật khẩu?</UButton>
+              <UButton variant="link" class="text-blue-500 hover:underline p-0" to="/auth/register">Đăng ký</UButton>
             </div>
           </div>
         </div>

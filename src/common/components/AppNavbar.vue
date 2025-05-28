@@ -13,6 +13,7 @@
           @click="toggleDark"
         />
         <UDropdownMenu
+          v-if="isAuthenticated"
           :items="userMenuItems"
           :content="{
             align: 'end',
@@ -29,6 +30,15 @@
         >
           <UserAvatar />
         </UDropdownMenu>
+        <UButton
+          v-else
+          to="/auth/login"
+          color="primary"
+          variant="ghost"
+          class="dark:text-white"
+        >
+          Đăng nhập
+        </UButton>
       </div>
     </div>
   </header>
@@ -36,11 +46,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useColorScheme } from '@/composables/useColorScheme'
+import { useColorScheme } from '@/common/composables/useColorScheme'
 import UserAvatar from './UserAvatar.vue'
 import AppSidebar from './AppSidebar.vue'
+import { useAuthStore } from '@/modules/auth/auth.store'
 
 const { isDark, toggleDark } = useColorScheme()
+const { isAuthenticated } = useAuthStore()
 
 const userMenuItems = ref([
   {

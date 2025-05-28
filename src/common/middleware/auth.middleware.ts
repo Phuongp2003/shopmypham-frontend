@@ -3,8 +3,8 @@ import { useAuthStore } from '@/modules/auth/auth.store'
 
 export const authMiddleware: NavigationGuard = async (to, from, next) => {
   const authStore = useAuthStore()
-  const authRoutes = ['/login', '/register']
-  const publicRoutes = ['/', '/about', '/contact', '/blog', '/blog/:id', '/auth/google']
+  const authRoutes = ['/auth/login', '/auth/register', '/auth/google']
+  const publicRoutes = ['/', '/about', '/contact', '/blog', '/blog/:id', '/auth/success']
   // Allow access to public routes
   if (authRoutes.includes(to.fullPath)) {
     // If already logged in and trying to access public routes, redirect to home
@@ -32,12 +32,12 @@ export const authMiddleware: NavigationGuard = async (to, from, next) => {
       } else {
         // Refresh failed, redirect to login
         console.log('Refresh failed, redirect to login')
-        return next('/login')
+        return next('/auth/login')
       }
     }
   } else {
     // Authentication failed, redirect to login
     console.log('Authentication failed, redirect to login')
-    return next('/login')
+    return next('/auth/login')
   }
 }

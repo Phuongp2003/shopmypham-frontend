@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useLayoutStore } from '@/stores/layout.store'
+import { useLayoutStore } from '@/common/layout.store'
 import router from '@/router'
 
 const layoutStore = useLayoutStore()

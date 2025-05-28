@@ -54,7 +54,7 @@ defineOptions({
 })
 
 import { ref, watch } from 'vue'
-import { useFileUpload } from '@/composables/useFileUpload'
+import { useFileUpload } from '@/common/composables/useFileUpload'
 import UFileUpload from '@/components/UFileUpload.vue'
 import { BlogType } from '@/enums'
 import type { CreateBlogReq } from '@/types'

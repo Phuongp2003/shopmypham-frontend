@@ -1,4 +1,4 @@
-import { apiRequest } from '@/utils/apiUtils'
+import { apiRequest } from '@/common/utils/apiUtils'
 import type { PaginatedResponse, QueryParams } from '@/types/api.type'
 import type { Cosmetic } from '@/types/cosmetic/cosmetic.type'
 import type { CreateCosmeticDTO, UpdateCosmeticDTO } from '@/types/cosmetic/cosmetic.dto'

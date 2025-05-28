@@ -4,7 +4,7 @@ import BlankLayout from '@/layouts/BlankLayout.vue'
 import AdminLayout from '@/layouts/AdminLayout.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import { useAuthStore } from '@/modules/auth/auth.store'
-import type { User } from '@/types/user/user.type'
+import type { User } from '@/modules/user/user.types'
 import  router  from '@/router'
 
 const metaData = await router.currentRoute.value.meta
