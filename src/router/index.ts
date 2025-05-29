@@ -4,15 +4,17 @@ import commonRouter from '@/common/common.router'
 import postRouter from '@/modules/post/post.router'
 import authRouter from '@/modules/auth/auth.router'
 import NotFoundView from '@/common/pages/NotFound.vue'
+import userRouter from '@/modules/user/user.router'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
       path: '/',
       children: [
-        ...commonRouter, // Note: common router cần đề cuối cùng vì nó có route catch all
+        ...commonRouter,
         ...postRouter,
         ...authRouter,
+        ...userRouter,
       ],
     },
     {

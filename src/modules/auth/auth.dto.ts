@@ -1,4 +1,4 @@
-import type { User } from "@/types/user/user.type"
+import type { User } from "@/modules/user/user.types"
 
 export type LoginReq = {
   email: User['email']

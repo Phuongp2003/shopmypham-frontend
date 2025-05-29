@@ -91,19 +91,18 @@ export const useAuthStore = defineStore('auth', () => {
   // Private methods
   const loadFromCookies = async () => {
     let isExpired = false
-    const accessToken = cookies.get(ACCESS_TOKEN_KEY)
-    const refreshToken = cookies.get(REFRESH_TOKEN_KEY)
-    console.log(cookies.getAll())
-    if (!accessToken && !refreshToken) {
+    accessToken.value = cookies.get(ACCESS_TOKEN_KEY)
+    refreshToken.value = cookies.get(REFRESH_TOKEN_KEY)
+    if (!accessToken.value && !refreshToken.value) {
       return false
     }
-    if (accessToken) {
-      const decodedToken = jwtDecode<JWTPayload>(accessToken)
+    if (accessToken.value) {
+      const decodedToken = jwtDecode<JWTPayload>(accessToken.value)
       if (decodedToken.exp < Math.floor(Date.now() / 1000)) {
         isExpired = true
       }
     }
-    if (refreshToken && !accessToken) {
+    if (refreshToken.value && !accessToken.value) {
       isExpired = true
     }
     if (isExpired) {
@@ -111,7 +110,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     try {
-      const decodedToken = jwtDecode<JWTPayload>(accessToken)
+      const decodedToken = jwtDecode<JWTPayload>(accessToken.value!)
       userPayload.value = decodedToken
       userId.value = decodedToken.id
       status.value = decodedToken.status

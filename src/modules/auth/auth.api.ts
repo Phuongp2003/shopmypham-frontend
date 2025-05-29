@@ -21,11 +21,6 @@ export const logoutApi = async (): Promise<void> => {
   return response.data
 }
 
-export const changePasswordApi = async (req: ChangePasswordReq): Promise<void> => {
-  const response = await api.post('/auth/change-password', req)
-  return response.data
-}
-
 export const generateOTPKeyApi = async (req: GenerateOTPKeyReq): Promise<GenerateOTPKeyRes> => {
   const response = await api.post('/auth/generate-otp-key', req)
   return response.data

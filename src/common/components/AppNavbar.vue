@@ -58,12 +58,7 @@ const userMenuItems = ref([
   {
     label: 'Tài khoản',
     icon: 'i-lucide-user',
-    to: '/account',
-  },
-  {
-    label: 'Quản lý người dùng',
-    icon: 'i-lucide-users',
-    to: '/users',
+    to: '/profile/me',
   },
   {
     label: 'Cài đặt',

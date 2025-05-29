@@ -10,12 +10,16 @@ export type User = {
   phone: string | null;
   role: string;
   googleId: string | null;
-  secretKey: string;
-  status: 'ACTIVE' | 'INACTIVE' | 'BANNED';
+  googleName: string | null;
+  googleEmail: string | null;
+  status: UserStatus;
   createdAt: Date;
   updatedAt: Date;
-  posts: Post[];
-  comments: Comment[];
-  orders: Order[];
-  cart: Cart | null;
+  posts?: Post[];
+  comments?: Comment[];
+  orders?: Order[];
+  cart?: Cart | null;
+  isNoPassword: boolean | false;
 }
+
+export type UserStatus = 'ACTIVE' | 'INACTIVE' | 'BANNED'
