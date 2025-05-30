@@ -38,8 +38,7 @@ export type CosmeticDistributorCreateReq = {
  *   email:
  *     type: string
  */
-export type CosmeticDistributorUpdateReq =
-    Partial<CosmeticDistributorCreateReq>;
+export type CosmeticDistributorUpdateReq = Partial<CosmeticDistributorCreateReq>;
 
 /**
  * @swagger

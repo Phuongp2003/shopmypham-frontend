@@ -1,2 +1,2 @@
-export * from './layout.store'
-export * from './init.store'
+export * from './layout.store';
+export * from './init.store';

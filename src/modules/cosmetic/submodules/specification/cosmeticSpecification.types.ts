@@ -37,11 +37,11 @@ export type CosmeticSpec = {
 };
 
 export interface CosmeticSpecification {
-  id: string
-  cosmeticId: string
-  specKey: string
-  specValue: string
-  orderIndex: number
-  createdAt: string
-  updatedAt: string
+    id: string;
+    cosmeticId: string;
+    specKey: string;
+    specValue: string;
+    orderIndex: number;
+    createdAt: string;
+    updatedAt: string;
 }

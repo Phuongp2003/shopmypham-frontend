@@ -34,16 +34,16 @@ export type CosmeticOption = {
 };
 
 export interface VariantOption {
-  id: string
-  optionKey: string
-  optionValue: string
-  createdAt: string
-  updatedAt: string
+    id: string;
+    optionKey: string;
+    optionValue: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface VariantResponse {
-  name: string
-  options: VariantOption[]
-  inStock: number
-  image: string
+    name: string;
+    options: VariantOption[];
+    inStock: number;
+    image: string;
 }

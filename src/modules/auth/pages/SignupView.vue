@@ -2,40 +2,58 @@
 import { reactive } from 'vue';
 import { z } from 'zod';
 import { useRouter } from 'vue-router';
-import type { LoginReq } from '@/modules/auth/auth.dto';
+import type { RegisterReq } from '@/modules/auth/auth.dto';
 import { useAuthStore } from '@/modules/auth/auth.store';
 
-const schema = z.object({
-    email: z.string().min(3, 'Tên đăng nhập phải có ít nhất 3 ký tự'),
-    password: z.string().min(3, 'Phải có ít nhất 3 ký tự'),
-});
+const schema = z
+    .object({
+        name: z.string().min(2, 'Tên phải có ít nhất 2 ký tự'),
+        email: z.string().email('Email không hợp lệ'),
+        phone: z.string().min(10, 'Số điện thoại phải có ít nhất 10 số'),
+        password: z.string().min(6, 'Mật khẩu phải có ít nhất 6 ký tự'),
+        confirmPassword: z.string(),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+        message: 'Mật khẩu xác nhận không khớp',
+        path: ['confirmPassword'],
+    });
 
-type LoginForm = z.infer<typeof schema>;
+type SignupForm = z.infer<typeof schema>;
 
 const state = reactive({
+    name: '',
     email: '',
+    phone: '',
     password: '',
+    confirmPassword: '',
 });
 
 const toast = useToast();
 const router = useRouter();
 const authStore = useAuthStore();
 
-async function onSubmit(event: { data: LoginForm }) {
+async function onSubmit(event: { data: SignupForm }) {
     try {
-        // Use form data directly as LoginReq
-        const loginReq: LoginReq = {
+        // Create RegisterReq from form data
+        const registerReq: RegisterReq = {
+            name: event.data.name,
             email: event.data.email,
+            phone: event.data.phone,
             password: event.data.password,
         };
 
-        // Use the login function from useAuth composable
-        await authStore.login(loginReq);
+        // Use the register function from auth store
+        await authStore.register(registerReq);
 
-        toast.add({ title: 'Thành công', description: 'Đăng nhập thành công.', color: 'success' });
+        toast.add({ title: 'Thành công', description: 'Đăng ký thành công.', color: 'success' });
         router.push('/');
     } catch (error) {
         console.error(error);
+        toast.add({
+            title: 'Lỗi',
+            description: 'Đăng ký không thành công. Vui lòng thử lại.',
+            color: 'error',
+        });
     }
 }
 </script>
@@ -44,13 +62,22 @@ async function onSubmit(event: { data: LoginForm }) {
     <div class="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
         <UCard class="w-full max-w-md m-4 shadow-xl border-2 border-gray-200 dark:border-gray-700">
             <div class="mb-8 text-center">
-                <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Chào Mừng Trở Lại</h1>
+                <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Tạo Tài Khoản Mới</h1>
                 <p class="text-gray-600 dark:text-gray-400">
-                    Vui lòng đăng nhập vào tài khoản của bạn
+                    Điền thông tin để tạo tài khoản của bạn
                 </p>
             </div>
-            <UForm :schema="schema" :state="state" class="space-y-6" @submit="onSubmit">
-                <UFormField label="Tên đăng nhập" name="username">
+            <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+                <UFormField label="Họ và tên" name="name">
+                    <UInput
+                        v-model="state.name"
+                        type="text"
+                        class="w-full"
+                        placeholder="Nhập họ và tên của bạn"
+                    />
+                </UFormField>
+
+                <UFormField label="Email" name="email">
                     <UInput
                         v-model="state.email"
                         type="email"
@@ -58,7 +85,17 @@ async function onSubmit(event: { data: LoginForm }) {
                         placeholder="Nhập email của bạn"
                     />
                 </UFormField>
-                <UFormField label="Mật Khẩu" name="password">
+
+                <UFormField label="Số điện thoại" name="phone">
+                    <UInput
+                        v-model="state.phone"
+                        type="tel"
+                        class="w-full"
+                        placeholder="Nhập số điện thoại của bạn"
+                    />
+                </UFormField>
+
+                <UFormField label="Mật khẩu" name="password">
                     <UInput
                         v-model="state.password"
                         type="password"
@@ -66,6 +103,16 @@ async function onSubmit(event: { data: LoginForm }) {
                         placeholder="Nhập mật khẩu của bạn"
                     />
                 </UFormField>
+
+                <UFormField label="Xác nhận mật khẩu" name="confirmPassword">
+                    <UInput
+                        v-model="state.confirmPassword"
+                        type="password"
+                        class="w-full"
+                        placeholder="Nhập lại mật khẩu của bạn"
+                    />
+                </UFormField>
+
                 <div class="mt-8">
                     <UButton
                         type="submit"
@@ -73,7 +120,7 @@ async function onSubmit(event: { data: LoginForm }) {
                         block
                         class="py-3 font-semibold text-lg hover:bg-blue-700 bg-blue-500"
                     >
-                        Đăng Nhập
+                        Đăng Ký
                     </UButton>
                     <div class="flex flex-col gap-3 mt-6">
                         <UButton
@@ -107,20 +154,14 @@ async function onSubmit(event: { data: LoginForm }) {
                                     />
                                 </g>
                             </svg>
-                            Đăng nhập bằng Google
+                            Đăng ký bằng Google
                         </UButton>
-                        <div class="flex justify-between">
+                        <div class="flex justify-center">
                             <UButton
                                 variant="link"
                                 class="text-blue-500 hover:underline p-0"
-                                to="/auth/forgot-password"
-                                >Quên mật khẩu?</UButton
-                            >
-                            <UButton
-                                variant="link"
-                                class="text-blue-500 hover:underline p-0"
-                                to="/auth/register"
-                                >Đăng ký</UButton
+                                to="/auth/login"
+                                >Đã có tài khoản? Đăng nhập</UButton
                             >
                         </div>
                     </div>
