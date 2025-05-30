@@ -4,6 +4,13 @@ export interface ApiResponse<T> {
   statusCode?: number
 }
 
+export interface Paginated {
+  total: number
+  page: number
+  limit: number
+  totalPages: number
+}
+
 export interface PaginatedResponse<T> {
   items: T[]
   total: number
@@ -15,11 +22,8 @@ export interface PaginatedResponse<T> {
 export interface QueryParams {
   page?: number
   limit?: number
-  sortBy?: string
   sortOrder?: 'asc' | 'desc'
   search?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
 }
 
 export enum SortOrder {

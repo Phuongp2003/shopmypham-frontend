@@ -1,8 +1,8 @@
 <template>
-  <component :is="currentLayout">
-    <UApp>
+  <component :is="currentLayout" class="page-soft">
+    <UApp class="bg-soft min-h-screen">
       <Suspense>
-        <router-view />
+        <router-view class="bg-soft" />
       </Suspense>
     </UApp>
   </component>
@@ -23,3 +23,16 @@ const currentLayout = computed(() => {
   return layoutStore.currentLayout
 })
 </script>
+
+<style>
+/* Ensure soft theme is applied globally */
+html, body {
+  background-color: var(--ui-bg-base) !important;
+  color: var(--ui-text-primary) !important;
+}
+
+/* Override any default Nuxt UI styles */
+.nuxt-ui-app {
+  background-color: var(--ui-bg-base) !important;
+}
+</style>

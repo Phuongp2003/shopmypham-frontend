@@ -1,67 +1,28 @@
-export type Cosmetic = {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  type: CosmeticType;
-  distributorId: string;
-  createdAt: Date;
-  updatedAt: Date;
-  distributor: CosmeticDistributor;
-  variants: CosmeticVariant[];
-  specifications: CosmeticSpec[];
-};
+import type { CosmeticBadge } from './submodules/badge/cosmeticBadge.types'
+import type { CosmeticBenefit } from './submodules/benefit/cosmeticBenefit.types'
+import type { CosmeticDistributor } from './submodules/distributor/cosmeticDistributor.types'
+import type { VariantResponse } from './submodules/option/cosmesticOptions.types'
+import type { CosmeticReview } from './submodules/review/cosmeticReview.types'
+import type { ShippingPolicy } from './submodules/shipping/shippingPolicy.types'
+import type { CosmeticSpecification } from './submodules/specification/cosmeticSpecification.types'
 
-export type CosmeticType = 'SKINCARE' | 'MAKEUP' | 'HAIRCARE' | 'FRAGRANCE' | 'BODYCARE' | 'NAILCARE' | 'OTHER';
-
-export type CosmeticVariant = {
-  id: string;
-  cosmeticId: Cosmetic['id']
-  sku: string;
-  price: number;
-  stock: number;
-  optionId: CosmeticOption['id'];
-  createdAt: Date;
-  updatedAt: Date;
-  option: CosmeticOption;
-  cosmetic: Cosmetic;
-};
-
-export type CosmeticOption = {
-  id: string;
-  optionKey: string;
-  optionValue: string;
-  createdAt: Date;
-  updatedAt: Date;
-  cosmeticVariant: CosmeticVariant[];
-};
-
-export type CosmeticVariantOption = {
-  id: string;
-  variantId: CosmeticVariant['id'];
-  optionId: CosmeticOption['id'];
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export type CosmeticSpec = {
-  id: string;
-  cosmeticId: Cosmetic['id'];
-  specKey: string;
-  specValue: string;
-  createdAt: Date;
-  updatedAt: Date;
-  cosmetic: Cosmetic;
-};
-
-export type CosmeticDistributor = {
-  id: string;
-  name: string;
-  address: string;
-  phone: string;
-  email: string;
-  createdAt: Date;
-  updatedAt: Date;
-  cosmetics: Cosmetic[];
-};
+export interface CosmeticResponse {
+  id: string
+  name: string
+  image: string
+  price: number
+  stock: number
+  description?: string
+  distributor?: CosmeticDistributor
+  variants: VariantResponse[]
+  usageInstructions?: string
+  averageRating?: number
+  totalReviews?: number
+  benefits?: CosmeticBenefit[]
+  badges?: CosmeticBadge[]
+  shippingPolicy?: ShippingPolicy
+  reviews?: CosmeticReview[]
+  specifications?: CosmeticSpecification[]
+  createdAt: string
+  updatedAt: string
+}

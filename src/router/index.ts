@@ -5,6 +5,7 @@ import postRouter from '@/modules/post/post.router'
 import authRouter from '@/modules/auth/auth.router'
 import NotFoundView from '@/common/pages/NotFound.vue'
 import userRouter from '@/modules/user/user.router'
+import cosmeticRouter from '@/modules/cosmetic/cosmetic.router'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -15,6 +16,7 @@ const router = createRouter({
         ...postRouter,
         ...authRouter,
         ...userRouter,
+        ...cosmeticRouter,
       ],
     },
     {

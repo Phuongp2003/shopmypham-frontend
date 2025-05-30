@@ -1,6 +1,143 @@
 @import 'tailwindcss';
 @import '@nuxt/ui';
 
+@theme {
+  /* Pink/Rose color palette for theme */
+  --color-pink-50: #fdf2f8;
+  --color-pink-100: #fce7f3;
+  --color-pink-200: #fbcfe8;
+  --color-pink-300: #f9a8d4;
+  --color-pink-400: #f472b6;
+  --color-pink-500: #ec4899;
+  --color-pink-600: #db2777;
+  --color-pink-700: #be185d;
+  --color-pink-800: #9d174d;
+  --color-pink-900: #831843;
+  --color-pink-950: #500724;
+
+  /* Rose color palette for secondary/accent */
+  --color-rose-50: #fff1f2;
+  --color-rose-100: #ffe4e6;
+  --color-rose-200: #fecdd3;
+  --color-rose-300: #fda4af;
+  --color-rose-400: #fb7185;
+  --color-rose-500: #f43f5e;
+  --color-rose-600: #e11d48;
+  --color-rose-700: #be123c;
+  --color-rose-800: #9f1239;
+  --color-rose-900: #881337;
+  --color-rose-950: #4c0519;
+
+  /* Very soft, warm background colors for light mode */
+  --color-warm-25: #fcfcfc;
+  --color-warm-50: #faf9f9;
+  --color-warm-100: #f6f5f4;
+  --color-warm-150: #f3f2f1;
+  --color-warm-200: #efeeec;
+  --color-warm-250: #eae9e7;
+  
+  /* Decreased pink tones for softer appearance */
+  --color-pink-50: #fde7f3;
+  --color-pink-100: #fbcfe8;
+  --color-pink-200: #f9a8d4;
+  --color-pink-300: #f472b6;
+  --color-pink-400: #ec4899;
+  --color-pink-500: #db2777;
+  --color-pink-600: #be185d;
+  --color-pink-700: #9d174d;
+  --color-pink-800: #831843;
+  --color-pink-900: #500724;
+  --color-pink-950: #500724;
+
+  /* Lighter grays for softer dark mode */
+  --color-soft-gray-900: #1f2937;
+  --color-soft-gray-800: #374151;
+  --color-soft-gray-700: #4b5563;
+  --color-soft-gray-600: #6b7280;
+  --color-soft-gray-500: #9ca3af;
+}
+
+:root {
+  /* Ultra-soft light mode theme */
+  --ui-primary: var(--color-pink-500);
+  --ui-primary-50: var(--color-pink-50);
+  --ui-primary-100: var(--color-pink-100);
+  --ui-primary-200: var(--color-pink-200);
+  --ui-primary-300: var(--color-pink-300);
+  --ui-primary-400: var(--color-pink-400);
+  --ui-primary-500: var(--color-pink-500);
+  --ui-primary-600: var(--color-pink-600);
+  --ui-primary-700: var(--color-pink-700);
+  --ui-primary-800: var(--color-pink-800);
+  --ui-primary-900: var(--color-pink-900);
+  --ui-primary-950: var(--color-pink-950);
+  
+  /* Much softer background colors for light mode */
+  --ui-bg-base: var(--color-pink-50);       /* Soft cream base */
+  --ui-bg-elevated: var(--color-pink-100);    /* Slightly lighter elevated surfaces */
+  --ui-bg-surface: var(--color-warm-50);      /* Warm surface color */
+  
+  /* Additional soft backgrounds */
+  --ui-bg-secondary: var(--color-warm-150);   /* For cards and panels */
+  --ui-bg-muted: var(--color-warm-200);       /* For muted backgrounds */
+  --ui-bg-subtle: var(--color-cream-150);     /* Ultra subtle background */
+  
+  /* Softer text colors */
+  --ui-text-primary: #2d3748;    /* Softer dark gray instead of black */
+  --ui-text-secondary: #4a5568;  /* Medium gray for secondary text */
+  --ui-text-muted: #718096;      /* Light gray for muted text */
+}
+
+.dark {
+  /* Lighter dark mode - less harsh blacks */
+  --ui-primary: var(--color-pink-400);
+  --ui-primary-50: var(--color-pink-950);
+  --ui-primary-100: var(--color-pink-900);
+  --ui-primary-200: var(--color-pink-800);
+  --ui-primary-300: var(--color-pink-700);
+  --ui-primary-400: var(--color-pink-600);
+  --ui-primary-500: var(--color-pink-500);
+  --ui-primary-600: var(--color-pink-400);
+  --ui-primary-700: var(--color-pink-300);
+  --ui-primary-800: var(--color-pink-200);
+  --ui-primary-900: var(--color-pink-100);
+  --ui-primary-950: var(--color-pink-50);
+  
+  /* Lighter background colors for softer dark mode */
+  --ui-bg-base: var(--color-soft-gray-900);      /* Lighter than pure black */
+  --ui-bg-elevated: var(--color-soft-gray-800);  /* Lighter elevated surfaces */
+  --ui-bg-surface: var(--color-soft-gray-700);   /* Lighter surface color */
+  --ui-bg-secondary: var(--color-soft-gray-600); /* Lighter secondary backgrounds */
+  --ui-bg-muted: var(--color-soft-gray-500);     /* Lighter muted backgrounds */
+  --ui-bg-subtle: #2a3441;                       /* Subtle background variation */
+  
+  /* Adjusted text colors for lighter dark mode */
+  --ui-text-primary: #f7fafc;    /* Slightly off-white */
+  --ui-text-secondary: #e2e8f0;  /* Light gray for secondary text */
+  --ui-text-muted: #cbd5e0;      /* Medium gray for muted text */
+}
+
+@layer base {
+  /* Force soft theme at base level */
+  html {
+    background-color: var(--ui-bg-base) !important;
+    color: var(--ui-text-primary) !important;
+  }
+  
+  body {
+    background-color: var(--ui-bg-base) !important;
+    color: var(--ui-text-primary) !important;
+  }
+  
+  /* Override Nuxt UI defaults */
+  .nuxt-ui-app,
+  #__nuxt,
+  .app {
+    background-color: var(--ui-bg-base) !important;
+    color: var(--ui-text-primary) !important;
+  }
+}
+
 @layer utilities {
   .scale-98 {
     --tw-scale-x: 0.98;
@@ -25,5 +162,136 @@
 
   .dark .card-hover:hover {
     filter: brightness(1);
+  }
+
+  /* Pink theme specific utilities */
+  .bg-pink-gradient {
+    background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+  }
+
+  .text-pink-gradient {
+    background: linear-gradient(135deg, #db2777 0%, #e11d48 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .border-pink-glow {
+    border-color: #ec4899;
+    box-shadow: 0 0 0 1px rgb(236 72 153 / 0.2), 0 0 10px rgb(236 72 153 / 0.1);
+  }
+
+  .dark .border-pink-glow {
+    border-color: #f472b6;
+    box-shadow: 0 0 0 1px rgb(244 114 182 / 0.3), 0 0 10px rgb(244 114 182 / 0.2);
+  }
+
+  /* Enhanced soft background utilities */
+  .bg-soft {
+    background-color: var(--ui-bg-base) !important;
+  }
+
+  .bg-soft-elevated {
+    background-color: var(--ui-bg-elevated) !important;
+  }
+
+  .bg-soft-surface {
+    background-color: var(--ui-bg-surface) !important;
+  }
+
+  .bg-soft-secondary {
+    background-color: var(--ui-bg-secondary) !important;
+  }
+
+  .bg-soft-muted {
+    background-color: var(--ui-bg-muted) !important;
+  }
+
+  .bg-soft-subtle {
+    background-color: var(--ui-bg-subtle) !important;
+  }
+
+  /* Navbar specific semi-transparent backgrounds */
+  .bg-navbar-light {
+    background-color: rgba(253, 231, 243, 0.95) !important; /* pink-50 with 95% opacity */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .bg-navbar-dark {
+    background-color: rgba(55, 65, 81, 0.95) !important; /* soft-gray-800 with 95% opacity */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .dark .bg-navbar-light {
+    background-color: rgba(55, 65, 81, 0.95) !important;
+  }
+
+  /* Soft gray utilities for dark mode */
+  .bg-soft-gray-900 {
+    background-color: var(--color-soft-gray-900) !important;
+  }
+
+  .bg-soft-gray-800 {
+    background-color: var(--color-soft-gray-800) !important;
+  }
+
+  .bg-soft-gray-700 {
+    background-color: var(--color-soft-gray-700) !important;
+  }
+
+  .bg-soft-gray-600 {
+    background-color: var(--color-soft-gray-600) !important;
+  }
+
+  .bg-soft-gray-500 {
+    background-color: var(--color-soft-gray-500) !important;
+  }
+
+  /* Enhanced text utilities for better readability */
+  .text-soft-primary {
+    color: var(--ui-text-primary) !important;
+  }
+
+  .text-soft-secondary {
+    color: var(--ui-text-secondary) !important;
+  }
+
+  .text-soft-muted {
+    color: var(--ui-text-muted) !important;
+  }
+
+  /* Page-level background class for ultra-soft appearance */
+  .page-soft {
+    background-color: var(--ui-bg-base) !important;
+    color: var(--ui-text-primary) !important;
+    min-height: 100vh;
+  }
+
+  /* Card backgrounds with enhanced softness */
+  .card-soft {
+    background-color: var(--ui-bg-elevated) !important;
+    border: 1px solid rgb(0 0 0 / 0.05);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+  }
+
+  .dark .card-soft {
+    background-color: var(--ui-bg-elevated) !important;
+    border: 1px solid rgb(255 255 255 / 0.05);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+  }
+
+  /* Navbar specific enhancements */
+  .navbar-glass {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .dark .navbar-glass {
+    background: rgba(31, 41, 55, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 }
