@@ -84,6 +84,15 @@ export default defineConfig({
         },
         container: {
           base: 'bg-soft'
+        },
+        table: {
+          slots: {
+            base: 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700',
+            th: 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 font-semibold',
+            td: 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200',
+            tr: 'hover:bg-gray-50 dark:hover:bg-gray-700',
+            tbody: 'divide-y divide-default [&>tr]:data-[selectable=true]:hover:bg-elevated/50 [&>tr]:data-[selectable=true]:focus-visible:outline-primary',
+          }
         }
       },
       autoImport: {

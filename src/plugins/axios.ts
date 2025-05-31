@@ -28,6 +28,11 @@ api.interceptors.request.use(
 
 // Simple response interceptor without token refresh logic
 api.interceptors.response.use(
-    (response) => response,
-    (error) => Promise.reject(error),
+    (response) => {
+        if (response.data) response.data.statusCode = response.status;
+        return response;
+    },
+    (error) => {
+        return Promise.reject(error);
+    },
 );

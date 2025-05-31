@@ -1,7 +1,12 @@
 export interface ApiResponse<T> {
     data: T;
-    message?: string;
-    statusCode?: number;
+    message: string;
+    code: number;
+}
+
+export interface ApiResponseV2 {
+  message?: string;
+  statusCode: number;
 }
 
 export interface Paginated {

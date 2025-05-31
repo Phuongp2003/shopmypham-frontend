@@ -29,6 +29,7 @@
                         :reviews="approvedReviews"
                         :averageRating="cosmetic?.averageRating"
                         :totalReviews="cosmetic?.totalReviews"
+                        :cosmeticId="cosmetic.id"
                     />
                 </div>
             </template>

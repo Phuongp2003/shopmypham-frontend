@@ -50,7 +50,7 @@ const columns: TableColumn<OrderResponse>[] = [
         accessorKey: 'createdAt',
         header: 'Ngày đặt',
         cell: ({ row }: { row: { original: OrderResponse } }) =>
-            new Date(row.original.payments.createdAt).toLocaleString('vi-VN'),
+            new Date(row.original.payment.createdAt).toLocaleString('vi-VN'),
     },
     {
         accessorKey: 'status',

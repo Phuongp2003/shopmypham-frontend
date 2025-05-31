@@ -251,19 +251,10 @@
                 <!-- Pagination -->
                 <div v-if="totalPages > 1" class="flex justify-center">
                     <UPagination
-                        v-model="currentPage"
+                        v-model:page="currentPage"
                         :total="total"
                         :page-count="limit"
-                        :max="7"
-                        :ui="{
-                            wrapper: 'flex items-center gap-1',
-                            base: 'min-w-[2rem] min-h-[2rem] flex items-center justify-center text-sm font-medium rounded-lg transition-colors',
-                            default: {
-                                color: 'primary',
-                                variant: 'ghost',
-                            },
-                        }"
-                        @update:model-value="onPageChange"
+                        @update:page="onPageChange"
                     />
                 </div>
             </div>
@@ -283,7 +274,7 @@ const sortBy = ref('latest');
 const priceRange = ref('');
 const ratingFilter = ref('');
 const viewMode = ref<'grid' | 'list'>('grid');
-const currentPage = ref(1);
+const currentPage = ref<number>(1);
 const limit = ref(12);
 
 // Composable
@@ -335,14 +326,18 @@ const clearFilters = () => {
     priceRange.value = '';
     ratingFilter.value = '';
     currentPage.value = 1;
+    loadCosmetics();
 };
 
 const onPageChange = (page: number) => {
+    console.log('onPageChange', page);
     currentPage.value = page;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    loadCosmetics().then(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 };
 
-const loadCosmetics = () => {
+const loadCosmetics = async () => {
     const params = {
         page: currentPage.value,
         limit: limit.value,
@@ -352,22 +347,8 @@ const loadCosmetics = () => {
         minRating: ratingFilter.value || undefined,
     };
 
-    getCosmetics(params as CosmeticQueryParams);
+    await getCosmetics(params as CosmeticQueryParams);
 };
-
-// Watchers
-watch(
-    [searchQuery, sortBy, priceRange, ratingFilter],
-    () => {
-        currentPage.value = 1;
-        loadCosmetics();
-    },
-    { debounce: 300 },
-);
-
-watch(currentPage, () => {
-    loadCosmetics();
-});
 
 // Lifecycle
 onMounted(() => {

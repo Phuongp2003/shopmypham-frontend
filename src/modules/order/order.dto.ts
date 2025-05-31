@@ -19,6 +19,8 @@ export interface CreateOrderDto {
     variantId: string;
     quantity: number;
     price: number;
+    name: string;
+    image: string;
   }[];
 }
 

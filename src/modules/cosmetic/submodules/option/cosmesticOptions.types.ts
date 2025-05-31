@@ -42,6 +42,7 @@ export interface VariantOption {
 }
 
 export interface VariantResponse {
+    id: string;
     name: string;
     options: VariantOption[];
     inStock: number;

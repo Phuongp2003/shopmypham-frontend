@@ -28,6 +28,14 @@ export interface GetUserRes {
     isNoPassword: boolean | false;
 }
 
+export interface PaginationUserRes {
+    users: GetUserRes[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+}
+
 export interface ChangePasswordReq {
     oldPassword: string;
     newPassword: string;

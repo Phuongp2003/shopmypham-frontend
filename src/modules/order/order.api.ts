@@ -3,34 +3,42 @@ import type {
     CreateOrderDto,
     OrderQueryDto,
     OrderResponse,
-    PaginatedOrderResponse
+    PaginatedOrderResponse,
 } from './order.dto';
 
-export const getAllOrdersApi = async (
-    params: OrderQueryDto
-): Promise<PaginatedOrderResponse> => {
-    const response = await api.get<PaginatedOrderResponse>('/orders', { params });
+export const getAllOrdersApi = async (params: OrderQueryDto): Promise<PaginatedOrderResponse> => {
+    const response = await api.get<PaginatedOrderResponse>('/orders', { params }).catch((err) => {
+        throw new Error(err.response.data.message);
+    });
     return response.data;
 };
 
 export const getOrderByIdApi = async (id: string): Promise<OrderResponse> => {
-    const response = await api.get<OrderResponse>(`/orders/${id}`);
+    const response = await api.get<OrderResponse>(`/orders/${id}`).catch((err) => {
+        throw new Error(err.response.data.message);
+    });
     return response.data;
 };
 
 export const createOrderApi = async (order: CreateOrderDto): Promise<OrderResponse> => {
-    const response = await api.post<OrderResponse>('/orders', order);
+    const response = await api.post<OrderResponse>('/orders', order).catch((err) => {
+        throw new Error(err.response.data.message);
+    });
     return response.data;
 };
 
 export const updateOrderApi = async (
     id: string,
-    order: Partial<CreateOrderDto>
+    order: Partial<CreateOrderDto>,
 ): Promise<OrderResponse> => {
-    const response = await api.put<OrderResponse>(`/orders/${id}`, order);
+    const response = await api.put<OrderResponse>(`/orders/${id}`, order).catch((err) => {
+        throw new Error(err.response.data.message);
+    });
     return response.data;
 };
 
 export const deleteOrderApi = async (id: string): Promise<void> => {
-    await api.delete(`/orders/${id}`);
+    await api.delete(`/orders/${id}`).catch((err) => {
+        throw new Error(err.response.data.message);
+    });
 };

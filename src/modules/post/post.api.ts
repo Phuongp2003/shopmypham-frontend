@@ -9,17 +9,26 @@ import type {
 export const getAllPostsApi = async (
     params: PostQueryParams
 ): Promise<PostResponse[]> => {
-    const response = await api.get<PostResponse[]>('/posts', { params });
+    const response = await api.get<PostResponse[]>('/posts', { params })
+        .catch((err) => {
+            throw new Error(err.response.data.message);
+        });
     return response.data;
 };
 
 export const getPostByIdApi = async (id: string): Promise<PostResponse> => {
-    const response = await api.get<PostResponse>(`/posts/${id}`);
+    const response = await api.get<PostResponse>(`/posts/${id}`)
+        .catch((err) => {
+            throw new Error(err.response.data.message);
+        });
     return response.data;
 };
 
 export const createPostApi = async (data: PostCreateInput): Promise<PostResponse> => {
-    const response = await api.post<PostResponse>('/posts', data);
+    const response = await api.post<PostResponse>('/posts', data)
+        .catch((err) => {
+            throw new Error(err.response.data.message);
+        });
     return response.data;
 };
 
@@ -27,10 +36,16 @@ export const updatePostApi = async (
     id: string,
     data: PostUpdateInput
 ): Promise<PostResponse> => {
-    const response = await api.put<PostResponse>(`/posts/${id}`, data);
+    const response = await api.put<PostResponse>(`/posts/${id}`, data)
+        .catch((err) => {
+            throw new Error(err.response.data.message);
+        });
     return response.data;
 };
 
 export const deletePostApi = async (id: string): Promise<void> => {
-    await api.delete(`/posts/${id}`);
+    await api.delete(`/posts/${id}`)
+        .catch((err) => {
+            throw new Error(err.response.data.message);
+        });
 };

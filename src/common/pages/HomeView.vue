@@ -37,11 +37,11 @@
                 <template #default="{ item: group }">
                     <div class="flex gap-4 w-full">
                         <div v-for="cosmetic in group" :key="cosmetic.id" class="flex-1">
-                            <div
+                            <RouterLink :to="`/cosmetic/${cosmetic.id}`"
                                 class="flex flex-col items-center p-4 mx-2 bg-gray-100 dark:bg-gray-900 rounded-lg shadow"
                             >
                                 <img
-                                    :src="cosmetic.img"
+                                    :src="cosmetic.image"
                                     :alt="cosmetic.name"
                                     class="w-40 h-40 object-cover rounded-lg mb-2"
                                 />
@@ -50,7 +50,7 @@
                                 >
                                     {{ cosmetic.name }}
                                 </div>
-                            </div>
+                            </RouterLink>
                         </div>
                     </div>
                 </template>
@@ -137,23 +137,34 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-const cosmetics = [
-    { id: 1, name: 'Cosmetic 1', img: 'https://placehold.co/300x300?text=Cosmetic+1' },
-    { id: 2, name: 'Cosmetic 2', img: 'https://placehold.co/300x300?text=Cosmetic+2' },
-    { id: 3, name: 'Cosmetic 3', img: 'https://placehold.co/300x300?text=Cosmetic+3' },
-    { id: 4, name: 'Cosmetic 4', img: 'https://placehold.co/300x300?text=Cosmetic+4' },
-    { id: 5, name: 'Cosmetic 5', img: 'https://placehold.co/300x300?text=Cosmetic+5' },
-    { id: 6, name: 'Cosmetic 6', img: 'https://placehold.co/300x300?text=Cosmetic+6' },
-    { id: 7, name: 'Cosmetic 7', img: 'https://placehold.co/300x300?text=Cosmetic+7' },
-    { id: 8, name: 'Cosmetic 8', img: 'https://placehold.co/300x300?text=Cosmetic+8' },
-    { id: 9, name: 'Cosmetic 9', img: 'https://placehold.co/300x300?text=Cosmetic+9' },
-];
+import { useCosmetic } from '@/modules/cosmetic/cosmetic.composable';
+// const cosmetics = [
+//     { id: 1, name: 'Cosmetic 1', img: 'https://placehold.co/300x300?text=Cosmetic+1' },
+//     { id: 2, name: 'Cosmetic 2', img: 'https://placehold.co/300x300?text=Cosmetic+2' },
+//     { id: 3, name: 'Cosmetic 3', img: 'https://placehold.co/300x300?text=Cosmetic+3' },
+//     { id: 4, name: 'Cosmetic 4', img: 'https://placehold.co/300x300?text=Cosmetic+4' },
+//     { id: 5, name: 'Cosmetic 5', img: 'https://placehold.co/300x300?text=Cosmetic+5' },
+//     { id: 6, name: 'Cosmetic 6', img: 'https://placehold.co/300x300?text=Cosmetic+6' },
+//     { id: 7, name: 'Cosmetic 7', img: 'https://placehold.co/300x300?text=Cosmetic+7' },
+//     { id: 8, name: 'Cosmetic 8', img: 'https://placehold.co/300x300?text=Cosmetic+8' },
+//     { id: 9, name: 'Cosmetic 9', img: 'https://placehold.co/300x300?text=Cosmetic+9' },
+// ];
+
+const { cosmetics, loading, error, getCosmetics } = useCosmetic();
+
 // Group cosmetics into arrays of 3
 const groupedCosmetics = computed(() => {
     const groups = [];
-    for (let i = 0; i < cosmetics.length; i += 3) {
-        groups.push(cosmetics.slice(i, i + 3));
+    for (let i = 0; i < cosmetics.value.length; i += 3) {
+        groups.push(cosmetics.value.slice(i, i + 3));
     }
     return groups;
+});
+
+onMounted(() => {
+    getCosmetics({
+        page: 1,
+        limit: 9,
+    });
 });
 </script>

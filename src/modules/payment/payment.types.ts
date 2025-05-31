@@ -12,3 +12,22 @@ export type Payment = {
 };
 
 export type PaymentStatus = 'PENDING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+
+export type MomoPaymentRequest = {
+    orderId: string;
+    amount: number;
+}
+
+export type MomoPaymentResponse = {
+    partnerCode: string;
+    orderId: string;
+    requestId: string;
+    amount: number;
+    responseTime: number;
+    message: string;
+    resultCode: number;
+    payUrl: string;
+    deeplink: string;
+    qrCodeUrl: string;
+    deeplinkMiniApp: string;
+}

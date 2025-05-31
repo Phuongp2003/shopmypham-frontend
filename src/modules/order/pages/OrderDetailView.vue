@@ -7,10 +7,12 @@
         <div v-else>
             <div class="mb-4 space-y-1">
                 <div><b>Mã đơn:</b> {{ order.id }}</div>
-                <div><b>Ngày đặt:</b> {{ new Date(order.payments.createdAt).toLocaleString('vi-VN') }}</div>
+                <div><b>Ngày đặt:</b> {{ new Date(order.payment.createdAt).toLocaleString('vi-VN') }}</div>
                 <div class="flex items-center gap-2">
-                    <b>Trạng thái:</b>
+                    <b>Trạng thái đơn hàng:</b>
                     <UBadge :color="statusColor(order.status)">{{ order.status }}</UBadge>
+                    <b>Trạng thái thanh toán:</b>
+                    <UBadge :color="statusColor(order.payment.status)">{{ order.payment.status }}</UBadge>
                 </div>
                 <div><b>Địa chỉ:</b> {{ order.address?.addressLine }}, {{ order.address?.district }}, {{ order.address?.city }}</div>
             </div>
@@ -21,6 +23,10 @@
             <div class="mt-4 text-lg font-semibold">
                 <b>Tổng tiền:</b> {{ calcTotal(order).toLocaleString() }}₫
             </div>
+            <div class="my-4 text-lg font-semibold">
+              <b>Phương thức thanh toán:</b> {{ order.payment.paymentMethod }}
+            </div>
+            <UButton v-if="order.payment.status === 'PENDING'" color="primary" @click="handlePay">Thanh toán</UButton>
         </div>
     </div>
 </template>
@@ -30,9 +36,9 @@ import { getOrderByIdApi } from '../order.api';
 import { useRoute } from 'vue-router';
 import type { OrderResponse } from '../order.dto';
 import type { TableColumn } from '@nuxt/ui/dist/runtime/types';
+import { paymentViaMomoApi } from '@/modules/payment/payment.api';
 
 const UBadge = resolveComponent('UBadge');
-
 const order = ref<OrderResponse | null>(null);
 const loading = ref(false);
 const error = ref('');
@@ -49,6 +55,7 @@ function statusColor(status: string) {
         case 'DELIVERED':
             return 'success';
         case 'CANCELLED':
+        case 'FAILED':
             return 'error';
         default:
             return 'gray';
@@ -61,13 +68,13 @@ function calcTotal(order: OrderResponse) {
 
 const columns: TableColumn<any>[] = [
     {
-        accessorKey: 'variantId',
-        header: 'Mã SP',
+        accessorKey: 'image',
+        header: 'Ảnh',
+        cell: ({ row }: { row: { original: any } }) => h('img', { src: row.original.image, width: 50, height: 50 }),
     },
     {
         accessorKey: 'name',
         header: 'Tên sản phẩm',
-        cell: ({ row }: { row: { original: any } }) => row.original.cosmeticName || '-',
     },
     {
         accessorKey: 'quantity',
@@ -79,6 +86,23 @@ const columns: TableColumn<any>[] = [
         cell: ({ row }: { row: { original: any } }) => `${row.original.price.toLocaleString()}₫`,
     },
 ];
+const toast = useToast();
+const handlePay = () => {
+    paymentViaMomoApi({
+      orderId: order.value?.id,
+      amount: calcTotal(order.value!),
+    }).then((res) => {
+      if (res.resultCode === 0) {
+        window.open(res.payUrl, '_blank');
+      } else {
+        toast.add({
+          title: 'Lỗi thanh toán',
+          description: res.message,
+          color: 'error',
+        });
+      }
+    });
+}
 
 onMounted(async () => {
     loading.value = true;

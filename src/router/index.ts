@@ -9,12 +9,15 @@ import cosmeticRouter from '@/modules/cosmetic/cosmetic.router';
 import orderRouter from '@/modules/order/order.router';
 import cartRouter from '@/modules/cart/cart.router';
 import checkoutRouter from '@/modules/checkout/checkout.router';
+import userManagerRouter from '@/modules/user/user.manager.router';
+import cosmeticManagerRouter from '@/modules/cosmetic/cosmetic.manager.router';
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
             path: '/',
+            name: 'client-router',
             children: [
                 ...commonRouter,
                 ...postRouter,
@@ -24,6 +27,14 @@ const router = createRouter({
                 ...orderRouter,
                 ...cartRouter,
                 ...checkoutRouter,
+            ],
+        },
+        {
+            path: '/manager',
+            name: 'manager-router',
+            children: [
+                ...userManagerRouter,
+                ...cosmeticManagerRouter,
             ],
         },
         {

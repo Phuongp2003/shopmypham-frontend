@@ -16,49 +16,52 @@
 <script setup lang="ts">
 const menuItems = [
     {
-        label: 'Dashboard',
+        label: 'Tổng quan',
         icon: 'i-lucide-layout-dashboard',
-        to: '/',
+        to: '/manager/dashboard',
         active: false,
     },
     {
         label: 'Quản lý bài viết',
         icon: 'i-lucide-newspaper',
-        to: '/articles',
+        to: '/manager/articles',
+    },
+    {
+        label: 'Quản lý sản phẩm',
+        icon: 'i-lucide-box',
+        to: '/manager/products',
         children: [
             {
-                label: 'Tin tức',
-                description: 'Quản lý tin tức',
-                icon: 'i-lucide-newspaper',
-                to: '/articles/news',
+                label: 'Sản phẩm',
+                icon: 'i-lucide-box',
+                to: '/manager/products',
             },
             {
-                label: 'Sự kiện',
-                description: 'Quản lý sự kiện',
-                icon: 'i-lucide-calendar',
-                to: '/articles/events',
+                label: 'Danh mục sản phẩm',
+                icon: 'i-lucide-list-ordered',
+                to: '/manager/products/categories',
             },
+            {
+                label: 'Nhà phân phối',
+                icon: 'i-lucide-truck',
+                to: '/manager/distributors',
+            }
         ],
     },
     {
-        label: 'Quản lý biên bản phạt',
-        icon: 'i-lucide-file-text',
-        to: '/reports',
+        label: 'Quản lý đơn hàng',
+        icon: 'i-lucide-shopping-cart',
+        to: '/manager/orders',
     },
     {
-        label: 'Quản lý ETC',
-        icon: 'i-lucide-file-text',
-        to: '/ETCs',
-    },
-    {
-        label: 'Quản lý giao dịch',
-        icon: 'i-lucide-file-text',
-        to: '/transactions',
+        label: 'Quản lý thanh toán',
+        icon: 'i-lucide-credit-card',
+        to: '/manager/payments',
     },
     {
         label: 'Quản lý người dùng',
         icon: 'i-lucide-users',
-        to: '/users',
+        to: '/manager/users',
     },
 ];
 </script>

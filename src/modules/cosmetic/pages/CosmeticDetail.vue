@@ -70,7 +70,11 @@ import VariantSelector from '../components/Product/VariantSelector.vue';
 import AddToCartSection from '../components/Product/AddToCartSection.vue';
 import DetailTabs from '../components/Tab/DetailTabs.vue';
 import type { VariantResponse } from '../submodules/option/cosmesticOptions.types';
+import { addToCartApi } from '@/modules/cart/cart.api';
+import { useCartStore } from '@/modules/cart/cart.store';
+import { useAuthStore } from '@/modules/auth/auth.store';
 
+console.log(router.currentRoute.value);
 const cosmeticId = router.currentRoute.value.params.id;
 
 const cosmetic = ref<CosmeticResponse | null>(null);
@@ -88,7 +92,7 @@ const showImageModal = ref(false);
 // Mock data for enhanced display - will be populated from API
 const productImages = ref<string[]>([]);
 const isOnSale = ref(true);
-
+const toast = useToast();
 // Computed properties
 const canAddToCart = computed(() => {
     const stock = getMaxStock();
@@ -127,15 +131,20 @@ const decrementQuantity = () => {
 };
 
 const addToCart = () => {
-    // TODO: Implement add to cart functionality
-    console.log('Adding to cart:', {
-        cosmetic: cosmetic.value,
-        variant: selectedVariant.value,
-        quantity: quantity.value,
-    });
-
-    // Show success message (implement with your toast system)
-    alert(`Đã thêm ${quantity.value} sản phẩm vào giỏ hàng!`);
+    addToCartApi(selectedVariant.value?.id!, quantity.value)
+        .then(() => {
+            toast.add({
+                title: 'Thêm vào giỏ hàng thành công',
+                color: 'success',
+            });
+            useCartStore().fetchCart(useAuthStore().user?.id!);
+        })
+        .catch((err) => {
+            toast.add({
+                title: err.message,
+                color: 'error',
+            });
+        });
 };
 
 const openImageModal = () => {
@@ -144,6 +153,7 @@ const openImageModal = () => {
 
 onMounted(async () => {
     if (!cosmeticId) {
+        console.log('cosmeticId', cosmeticId);
         error.value = 'Không tìm thấy sản phẩm';
         return;
     }
