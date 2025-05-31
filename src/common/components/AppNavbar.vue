@@ -10,6 +10,10 @@
         <div class="h-full px-4 flex items-center justify-between">
             <AppSidebar />
             <div class="flex items-center gap-4">
+                <UNavigationMenu
+                    :items="navItems"
+                    class="w-auto justify-center"
+                />
                 <UButton
                     :icon="isDark ? 'i-lucide-sun' : 'i-lucide-moon'"
                     color="primary"
@@ -75,6 +79,11 @@ const userMenuItems = ref([
         icon: 'i-lucide-log-out',
         to: '/logout',
     },
+]);
+
+const navItems = ref([
+    { label: 'Bài viết', icon: 'i-lucide-book', to: '/post/list' },
+    { label: 'Sản phẩm', icon: 'i-lucide-box', to: '/cosmetic/list' },
 ]);
 </script>
 

@@ -1,4 +1,4 @@
-import type { Cosmetic } from '../../cosmetic.types';
+import type { Cosmetic } from '@/modules/cosmetic/cosmetic.types';
 import type { CosmeticOption } from '../option/cosmesticOptions.types';
 
 /**
@@ -42,10 +42,13 @@ import type { CosmeticOption } from '../option/cosmesticOptions.types';
  */
 export type CosmeticVariant = {
     id: string;
-    name: string;
+    cosmeticName: string;
     cosmeticId: Cosmetic['id'];
+    variantId: CosmeticVariant['id'];
     sku: string;
     price: number;
+    image?: string;
+    quantity: number;
     stock: number;
     createdAt: Date;
     updatedAt: Date;

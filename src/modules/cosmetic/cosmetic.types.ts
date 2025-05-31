@@ -4,7 +4,8 @@ import type { CosmeticDistributor } from './submodules/distributor/cosmeticDistr
 import type { VariantResponse } from './submodules/option/cosmesticOptions.types';
 import type { CosmeticReview } from './submodules/review/cosmeticReview.types';
 import type { ShippingPolicy } from './submodules/shipping/shippingPolicy.types';
-import type { CosmeticSpecification } from './submodules/specification/cosmeticSpecification.types';
+import type { CosmeticSpec, CosmeticSpecification } from './submodules/specification/cosmeticSpecification.types';
+import type { CosmeticVariant } from './submodules/variant/cosmeticVariant.types';
 
 export interface CosmeticResponse {
     id: string;
@@ -26,3 +27,28 @@ export interface CosmeticResponse {
     createdAt: string;
     updatedAt: string;
 }
+
+export type Cosmetic = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  type: CosmeticType;
+  image?: string;
+  distributorId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  distributor: CosmeticDistributor;
+  variants: CosmeticVariant[];
+  specifications: CosmeticSpec[];
+};
+
+export type CosmeticType =
+  | 'SKINCARE'
+  | 'MAKEUP'
+  | 'HAIRCARE'
+  | 'FRAGRANCE'
+  | 'BODYCARE'
+  | 'NAILCARE'
+  | 'OTHER';

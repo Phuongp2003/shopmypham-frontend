@@ -2,7 +2,7 @@
     <div class="flex flex-col min-h-screen w-full bg-gray-50 dark:bg-gray-900 mb-10">
         <!-- Banner -->
         <section
-            class="w-full h-[60vh] flex items-center justify-center bg-gradient-to-br from-pink-200 to-purple-200 dark:from-gray-800 dark:to-gray-900"
+            class="w-full h-[60vh] flex items-center justify-center bg-white dark:bg-gray-900 mb-10"
         >
             <UCard
                 class="w-full h-full flex items-center justify-center bg-transparent shadow-none border-none dark:bg-transparent"
@@ -17,14 +17,14 @@
 
         <!-- Featured Cosmetics Slider -->
         <section
-            class="w-full h-[50vh] flex flex-col items-center justify-center bg-white dark:bg-gray-800 py-8 mb-10"
+            class="w-full h-[50vh] flex flex-col items-center justify-center bg-soft-elevated dark:bg-gray-900 py-8 mb-10"
         >
             <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
                 Featured Cosmetics
             </h2>
             <UCarousel
                 :items="groupedCosmetics"
-                class="w-3/4"
+                class="w-3/4 shadow-lg shadow-gray-200 dark:shadow-gray-800 px-2 py-4 border border-gray-300 dark:border-gray-800 rounded-lg"
                 :autoplay="{ delay: 2000 }"
                 loop
                 :ui="{
@@ -59,10 +59,10 @@
 
         <!-- Top Blog Section -->
         <section
-            class="w-full h-[60vh] flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 py-4 mb-10"
+            class="w-full h-[60vh] flex flex-col items-center justify-center bg-soft-elevated dark:bg-gray-900 py-4 mb-10"
         >
             <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Top Blog</h2>
-            <div class="grid grid-cols-2 gap-6 w-3/4 h-full">
+            <div class="grid grid-cols-2 gap-6 w-3/4 h-[90%]">
                 <!-- Blog 1: 2 rows, 1 col, vertical split -->
                 <div
                     class="row-span-2 flex flex-col p-0 overflow-hidden bg-white dark:bg-gray-800 rounded-xl shadow h-full"

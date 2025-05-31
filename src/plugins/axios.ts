@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 export const api = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
     timeout: 10000,
@@ -7,21 +8,26 @@ export const api = axios.create({
     },
 });
 
-export default function setupAxios(header?: string) {
-    // Add access token to requests
-    api.interceptors.request.use(
-        (config) => {
-            if (header) {
-                config.headers.Authorization = header;
-            }
-            return config;
-        },
-        (error) => Promise.reject(error),
-    );
+let accessToken: string | undefined = undefined;
 
-    // Simple response interceptor without token refresh logic
-    api.interceptors.response.use(
-        (response) => response,
-        (error) => Promise.reject(error),
-    );
+export function setAccessToken(token?: string) {
+    accessToken = token;
 }
+
+api.interceptors.request.use(
+    (config) => {
+        if (accessToken) {
+            config.headers.Authorization = `Bearer ${accessToken}`;
+        } else {
+            delete config.headers.Authorization;
+        }
+        return config;
+    },
+    (error) => Promise.reject(error),
+);
+
+// Simple response interceptor without token refresh logic
+api.interceptors.response.use(
+    (response) => response,
+    (error) => Promise.reject(error),
+);

@@ -4,7 +4,8 @@ import { z } from 'zod';
 import { useRouter } from 'vue-router';
 import type { LoginReq } from '@/modules/auth/auth.dto';
 import { useAuthStore } from '@/modules/auth/auth.store';
-
+import { useCartStore } from '@/modules/cart/cart.store';
+import { setAccessToken } from '@/plugins/axios';
 const schema = z.object({
     email: z.string().min(3, 'Tên đăng nhập phải có ít nhất 3 ký tự'),
     password: z.string().min(3, 'Phải có ít nhất 3 ký tự'),
@@ -21,7 +22,7 @@ const toast = useToast();
 const router = useRouter();
 const authStore = useAuthStore();
 
-async function onSubmit(event: { data: LoginForm }) {
+function onSubmit(event: { data: LoginForm }) {
     try {
         // Use form data directly as LoginReq
         const loginReq: LoginReq = {
@@ -30,10 +31,17 @@ async function onSubmit(event: { data: LoginForm }) {
         };
 
         // Use the login function from useAuth composable
-        await authStore.login(loginReq);
-
-        toast.add({ title: 'Thành công', description: 'Đăng nhập thành công.', color: 'success' });
-        router.push('/');
+        authStore.login(loginReq).then(async () => {
+            toast.add({
+                title: 'Thành công',
+                description: 'Đăng nhập thành công.',
+                color: 'success',
+            });
+            setAccessToken(authStore.accessToken || '');
+            const cartStore = useCartStore();
+            await cartStore.fetchCart(authStore?.userId || '');
+            router.push('/');
+        });
     } catch (error) {
         console.error(error);
     }

@@ -2,12 +2,16 @@
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/modules/auth/auth.store';
 import { useLayoutStore } from '@/common/layout.store';
+import { useCartStore } from '@/modules/cart/cart.store';
 const router = useRouter();
 const authStore = useAuthStore();
 const layoutStore = useLayoutStore();
 layoutStore.setLayoutByName('default');
-authStore.logout();
-router.push('/login');
+await authStore.logout().then(() => {
+    const cartStore = useCartStore();
+    cartStore.clearCart();
+    router.push('/login');
+});
 </script>
 
 <template>

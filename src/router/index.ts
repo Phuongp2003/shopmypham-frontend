@@ -6,6 +6,10 @@ import authRouter from '@/modules/auth/auth.router';
 import NotFoundView from '@/common/pages/NotFound.vue';
 import userRouter from '@/modules/user/user.router';
 import cosmeticRouter from '@/modules/cosmetic/cosmetic.router';
+import orderRouter from '@/modules/order/order.router';
+import cartRouter from '@/modules/cart/cart.router';
+import checkoutRouter from '@/modules/checkout/checkout.router';
+
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -17,6 +21,9 @@ const router = createRouter({
                 ...authRouter,
                 ...userRouter,
                 ...cosmeticRouter,
+                ...orderRouter,
+                ...cartRouter,
+                ...checkoutRouter,
             ],
         },
         {

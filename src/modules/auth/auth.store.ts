@@ -5,6 +5,7 @@ import type { LoginReq, RegisterReq } from './auth.dto';
 import type { JWTPayload } from './auth.types';
 import { useCookies } from '@vueuse/integrations/useCookies';
 import { jwtDecode } from 'jwt-decode';
+import { setAccessToken } from '@/plugins/axios';
 
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
@@ -40,6 +41,7 @@ export const useAuthStore = defineStore('auth', () => {
         userType.value = decodedToken.role;
         expiresIn.value = decodedToken.exp - decodedToken.iat;
         setTokens();
+        setAccessToken(accessToken.value);
         isAuthenticated.value = true;
     };
 
@@ -55,7 +57,7 @@ export const useAuthStore = defineStore('auth', () => {
         isAuthenticated.value = true;
     };
 
-    const logout = () => {
+    const logout = async () => {
         cookies.remove(ACCESS_TOKEN_KEY);
         cookies.remove(REFRESH_TOKEN_KEY);
         isAuthenticated.value = false;
@@ -67,6 +69,9 @@ export const useAuthStore = defineStore('auth', () => {
         userId.value = null;
         status.value = null;
         userType.value = null;
+        accessToken.value = '';
+        refreshToken.value = '';
+        setAccessToken('');
     };
 
     const requestRefreshToken = async () => {
@@ -143,6 +148,8 @@ export const useAuthStore = defineStore('auth', () => {
             sameSite: 'lax',
             maxAge: 60 * 60 * 24 * 7, // 1 week
         });
+
+        setAccessToken(accessToken.value || '');
     };
 
     return {

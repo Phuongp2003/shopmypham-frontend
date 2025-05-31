@@ -15,6 +15,10 @@
                 DPT Cosmetics
             </ULink>
             <div class="flex items-center gap-4">
+                <UNavigationMenu
+                    :items="navItems"
+                    class="w-auto justify-center"
+                />
                 <UButton
                     :icon="isDark ? 'i-lucide-sun' : 'i-lucide-moon'"
                     color="primary"
@@ -22,6 +26,18 @@
                     class="text-soft-primary hover:bg-pink-100/50 dark:hover:bg-pink-400/10 transition-colors duration-200"
                     @click="toggleDark"
                 />
+                <div class="relative">
+                    <UButton
+                        to="/cart"
+                        color="primary"
+                        variant="ghost"
+                        icon="i-lucide-shopping-cart"
+                        class="text-soft-primary hover:bg-pink-100/50 dark:hover:bg-pink-400/10 transition-colors duration-200"
+                    />
+                    <span v-if="cartCount > 0" class="absolute -top-1 -right-1 bg-pink-500 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[20px] text-center border border-white dark:border-gray-900">
+                        {{ cartCount }}
+                    </span>
+                </div>
                 <UDropdownMenu
                     v-if="isAuthenticated"
                     :items="userMenuItems"
@@ -55,12 +71,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useColorScheme } from '@/common/composables/useColorScheme';
 import UserAvatar from './UserAvatar.vue';
 import { useAuthStore } from '@/modules/auth/auth.store';
+import { useCartStore } from '@/modules/cart/cart.store';
 
-const { isAuthenticated } = useAuthStore();
+const { isAuthenticated, user } = useAuthStore();
 const { isDark, toggleDark } = useColorScheme();
 
 const userMenuItems = ref([
@@ -68,6 +85,11 @@ const userMenuItems = ref([
         label: 'Tài khoản',
         icon: 'i-lucide-user',
         to: '/profile/me',
+    },
+    {
+        label: 'Đơn hàng',
+        icon: 'i-lucide-package',
+        to: '/order/list',
     },
     {
         label: 'Cài đặt',
@@ -80,6 +102,16 @@ const userMenuItems = ref([
         to: '/logout',
     },
 ]);
+
+const navItems = ref([
+    { label: 'Bài viết', icon: 'i-lucide-book', to: '/post/list' },
+    { label: 'Sản phẩm', icon: 'i-lucide-box', to: '/cosmetic/list' },
+]);
+
+const cartCount = computed(() => {
+    const cartStore = useCartStore();
+    return cartStore.getCartItemCount;
+});
 </script>
 
 <style scoped>
