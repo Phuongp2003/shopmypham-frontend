@@ -35,7 +35,6 @@ shopmypham-web/
 │   ├── modules/        # Module tính năng (auth, cart, cosmetic, order, ...)
 │   ├── plugins/        # Plugin Vue
 │   └── router/         # Định tuyến
-├── memory-bank/        # Ghi chú kỹ thuật, rule, todo, feature
 ├── public/             # Tài nguyên tĩnh
 ├── package.json        # Script, dependency
 └── ...
