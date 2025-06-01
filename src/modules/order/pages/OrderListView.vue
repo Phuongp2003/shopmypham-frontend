@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-4xl mx-auto py-8">
+    <div class="max-w-5xl mx-auto py-8">
         <h1 class="text-2xl font-bold mb-6">Đơn hàng của bạn</h1>
         <div v-if="loading" class="text-center">Đang tải...</div>
         <div v-else-if="error" class="text-red-500 text-center">{{ error }}</div>
@@ -27,14 +27,18 @@ function calcTotal(order: OrderResponse) {
 function statusColor(status: string) {
     switch (status) {
         case 'PENDING':
+        case 'COD':
             return 'neutral';
         case 'PROCESSING':
+        case 'cash':
             return 'info';
         case 'SHIPPED':
             return 'warning';
         case 'DELIVERED':
+        case 'MOMO':
             return 'success';
         case 'CANCELLED':
+        case 'FAILED':
             return 'error';
         default:
             return 'neutral';
@@ -57,6 +61,26 @@ const columns: TableColumn<OrderResponse>[] = [
         header: 'Trạng thái',
         cell: ({ row }: { row: { original: OrderResponse } }) =>
             h(UBadge, { color: statusColor(row.original.status) }, () => row.original.status),
+    },
+    {
+        accessorKey: 'payment.status',
+        header: 'Trạng thái thanh toán',
+        cell: ({ row }: { row: { original: OrderResponse } }) =>
+            h(
+                UBadge,
+                { color: statusColor(row.original.payment?.status) },
+                () => row.original.payment?.status,
+            ),
+    },
+    {
+        accessorKey: 'payment.paymentMethod',
+        header: 'Phương thức thanh toán',
+        cell: ({ row }: { row: { original: OrderResponse } }) =>
+            h(
+                UBadge,
+                { color: statusColor(row.original.payment?.paymentMethod) },
+                () => row.original.payment?.paymentMethod,
+            ),
     },
     {
         id: 'total',

@@ -56,11 +56,6 @@ const menuItems = [
         to: '/manager/orders',
     },
     {
-        label: 'Quản lý thanh toán',
-        icon: 'i-lucide-credit-card',
-        to: '/manager/payments',
-    },
-    {
         label: 'Quản lý người dùng',
         icon: 'i-lucide-users',
         to: '/manager/users',

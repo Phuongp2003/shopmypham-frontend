@@ -124,7 +124,7 @@ async function onSubmit(event: { data: SignupForm }) {
                     </UButton>
                     <div class="flex flex-col gap-3 mt-6">
                         <UButton
-                            color="secondary"
+                            color="success"
                             block
                             class="border border-gray-300 text-gray-700 hover:bg-gray-100 flex items-center justify-center gap-2"
                             :to="`/auth/google`"
@@ -167,6 +167,13 @@ async function onSubmit(event: { data: SignupForm }) {
                     </div>
                 </div>
             </UForm>
+            <div class="flex justify-center mt-4">
+                <UButton
+                    variant="outline"
+                    to="/"
+                    >Về trang chủ</UButton
+                >
+            </div>
         </UCard>
     </div>
 </template>

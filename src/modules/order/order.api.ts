@@ -13,6 +13,13 @@ export const getAllOrdersApi = async (params: OrderQueryDto): Promise<PaginatedO
     return response.data;
 };
 
+export const getAllOrdersManagerApi = async (params: OrderQueryDto): Promise<PaginatedOrderResponse> => {
+  const response = await api.get<PaginatedOrderResponse>('/orders/admin', { params }).catch((err) => {
+      throw new Error(err.response.data.message);
+  });
+  return response.data;
+};
+
 export const getOrderByIdApi = async (id: string): Promise<OrderResponse> => {
     const response = await api.get<OrderResponse>(`/orders/${id}`).catch((err) => {
         throw new Error(err.response.data.message);

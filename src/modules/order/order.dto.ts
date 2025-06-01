@@ -38,7 +38,7 @@ export interface OrderResponse {
     status: OrderStatus;
     address: Address;
     note?: string;
-    payments: {
+    payment: {
         id: string;
         paymentMethod: string;
         amount: number;
