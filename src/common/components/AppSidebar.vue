@@ -24,7 +24,7 @@ const menuItems = [
     {
         label: 'Quản lý bài viết',
         icon: 'i-lucide-newspaper',
-        to: '/manager/articles',
+        to: '/manager/post',
     },
     {
         label: 'Quản lý sản phẩm',

@@ -1,19 +1,41 @@
-import { z } from 'zod';
-import type { PostCreateInput, PostQueryParams, PostUpdateInput } from './post.types';
+import type { Paginated } from '@/common/api.type';
 
-export const postQueryParamsSchema = z.object({
-    search: z.string().optional(),
-    sortBy: z.enum(['createdAt', 'title']).optional(),
-    sortOrder: z.enum(['asc', 'desc']).optional(),
-    page: z.number().int().positive().optional(),
-    limit: z.number().int().positive().optional(),
-    published: z.boolean().optional(),
-}) satisfies z.ZodType<PostQueryParams>;
+export interface PostQueryParamsSchema {
+    authorId?: string; // ID người dùng (nếu cần lọc theo người dùng)
+    published?: boolean;
+    page?: number;
+    limit?: number;
+    sortBy?: string;
+    sortOrder?: 'asc' | 'desc';
+}
+export interface CreatePostDto {
+    title: string;
+    content: string;
+    published: boolean; // Trạng thái công khai của bài viết
+    description: string;
+    image: string;
+    createdAt?: Date; // Ngày tạo bài viết
+    updatedAt?: Date; // Ngày cập nhật bài viết
+}
 
-export const postCreateSchema = z.object({
-    title: z.string().min(1).max(255),
-    content: z.string().min(1),
-    published: z.boolean().optional(),
-}) satisfies z.ZodType<PostCreateInput>;
+export interface PostResponse {
+    id: string;
+    title: string;
+    content: string;
+    published: boolean;
+    description: string;
+    image: string;
+    slug: string;
+    authorId: string; // ID của người viết bài
+    comments?: string[]; // ID của các bình luận liên quan
+    createdAt: Date; // Ngày tạo bài viết
+    updatedAt: Date; // Ngày cập nhật bài viết
+}
 
-export const postUpdateSchema = postCreateSchema.partial() satisfies z.ZodType<PostUpdateInput>;
+export interface PaginatedPostResponse extends Paginated {
+    posts: PostResponse[];
+}
+
+export type SuccessResponse = {
+    message: string;
+};

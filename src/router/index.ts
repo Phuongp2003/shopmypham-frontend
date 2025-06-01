@@ -12,6 +12,7 @@ import checkoutRouter from '@/modules/checkout/checkout.router';
 import userManagerRouter from '@/modules/user/user.manager.router';
 import cosmeticManagerRouter from '@/modules/cosmetic/cosmetic.manager.router';
 import orderManagerRouter from '@/modules/order/order.manager.router';
+import postManagerRouter from '@/modules/post/post.manager.router';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -33,7 +34,12 @@ const router = createRouter({
         {
             path: '/manager',
             name: 'manager-router',
-            children: [...userManagerRouter, ...cosmeticManagerRouter, ...orderManagerRouter],
+            children: [
+                ...userManagerRouter,
+                ...cosmeticManagerRouter,
+                ...orderManagerRouter,
+                ...postManagerRouter,
+            ],
         },
         {
             path: '/:pathMatch(.*)*',

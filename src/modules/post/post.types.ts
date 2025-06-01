@@ -1,6 +1,5 @@
-import type { User } from '@/modules/user/user.types';
+import { type User } from '@/modules/user/user.types';
 import type { Comment } from '@/modules/comment/comment.types';
-
 export type PostWithAuthor = Post & {
     author: Pick<User, 'id' | 'name' | 'email'>;
 };
@@ -16,7 +15,10 @@ export type PostQueryParams = {
 
 export type PostCreateInput = {
     title: string;
+    description: string;
     content: string;
+    image: string;
+    slug: string;
     published?: boolean;
 };
 
@@ -25,7 +27,10 @@ export type PostUpdateInput = Partial<PostCreateInput>;
 export type PostResponse = {
     id: string;
     title: string;
+    description: string;
     content: string;
+    image: string;
+    slug: string;
     published: boolean;
     author: {
         id: string;
@@ -39,7 +44,10 @@ export type PostResponse = {
 export type Post = {
     id: string;
     title: string;
+    description: string;
     content: string;
+    image: string;
+    slug: string;
     published: boolean;
     authorId: string;
     author: User;
