@@ -99,10 +99,8 @@
 <script setup lang="ts">
 import UserAvatar from '@/common/components/UserAvatar.vue';
 import { useUserProfile } from '../user.composable';
-import { ref, onMounted } from 'vue';
-import { useAuthStore } from '@/modules/auth/auth.store';
+import { onMounted } from 'vue';
 
-const authStore = useAuthStore();
 const { user, isLoading, isError, error, getUserProfile, unlinkGoogle } = useUserProfile();
 
 const handleLinkGoogle = () => {

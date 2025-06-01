@@ -47,10 +47,11 @@
 <script setup lang="ts">
 import { h, ref, resolveComponent, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { getAllOrdersManagerApi } from '../../order.api';
+import { getAllOrdersManagerApi, updateOrderStatusApi } from '../../order.api';
 import type { OrderResponse } from '../../order.dto';
 import type { TableColumn } from '@nuxt/ui/dist/runtime/types';
 import { getPaginationRowModel } from '@tanstack/vue-table';
+import { statusColor } from '../../order.helper';
 
 const UButton = resolveComponent('UButton');
 const UDropdownMenu = resolveComponent('UDropdownMenu');
@@ -59,6 +60,7 @@ const UCard = resolveComponent('UCard');
 const UTable = resolveComponent('UTable');
 const UPagination = resolveComponent('UPagination');
 const router = useRouter();
+const toast = useToast();
 
 const orders = ref<OrderResponse[]>([]);
 const isLoading = ref(false);
@@ -70,26 +72,6 @@ const total = ref(0);
 
 function calcTotal(order: OrderResponse) {
     return order.details.reduce((sum, d) => sum + d.price * d.quantity, 0);
-}
-function statusColor(status: string) {
-    switch (status) {
-        case 'PENDING':
-        case 'COD':
-            return 'neutral';
-        case 'PROCESSING':
-        case 'cash':
-            return 'info';
-        case 'SHIPPED':
-            return 'warning';
-        case 'DELIVERED':
-        case 'MOMO':
-            return 'success';
-        case 'CANCELLED':
-        case 'FAILED':
-            return 'error';
-        default:
-            return 'neutral';
-    }
 }
 
 function getRowItems(row: OrderResponse) {
@@ -103,7 +85,23 @@ function getRowItems(row: OrderResponse) {
         {
             label: 'Cập nhật trạng thái',
             icon: 'i-lucide-refresh-cw',
-            onSelect: () => handleUpdateStatus(row),
+            children: [
+                {
+                    label: 'Đang giao hàng',
+                    icon: 'i-lucide-truck',
+                    onSelect: () => handleUpdateStatus(row.id, 'SHIPPED'),
+                },
+                {
+                    label: 'Đã giao hàng',
+                    icon: 'i-lucide-check-circle',
+                    onSelect: () => handleUpdateStatus(row.id, 'DELIVERED'),
+                },
+                {
+                    label: 'Đã hủy',
+                    icon: 'i-lucide-x-circle',
+                    onSelect: () => handleUpdateStatus(row.id, 'CANCELLED'),
+                },
+            ],
         },
     ];
 }
@@ -204,9 +202,21 @@ const onPageChange = (newPage: number) => {
     fetchOrders();
 };
 
-function handleUpdateStatus(order: OrderResponse) {
-    // TODO: Hiện modal cập nhật trạng thái, gọi API updateOrderApi
-    alert('Chức năng cập nhật trạng thái sẽ được bổ sung!');
+async function handleUpdateStatus(orderId: string, status: string) {
+    await updateOrderStatusApi(orderId, status)
+        .then(() => {
+            toast.add({
+                title: 'Cập nhật trạng thái thành công',
+                color: 'success',
+            });
+            fetchOrders();
+        })
+        .catch((err) => {
+            toast.add({
+                title: 'Lỗi cập nhật trạng thái',
+                color: 'error',
+            });
+        });
 }
 
 onMounted(() => {

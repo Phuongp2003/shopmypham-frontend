@@ -1,19 +1,19 @@
 <template>
-  <UCard>
-    <template #header>
-      <UButton @click="openCreateModal">+ Thêm mới</UButton>
-    </template>
-    <CosmeticTable @edit="openEditModal" />
-    <UModal v-model="showModal">
-      <CosmeticForm
-        :cosmetic="selectedCosmetic"
-        :is-create="isCreate"
-        :loading="isLoading"
-        @submit="onSubmit"
-        @close="closeModal"
-      />
-    </UModal>
-  </UCard>
+    <UCard>
+        <template #header>
+            <UButton @click="openCreateModal">+ Thêm mới</UButton>
+        </template>
+        <CosmeticTable @edit="openEditModal" />
+        <UModal v-model="showModal">
+            <CosmeticForm
+                :cosmetic="selectedCosmetic"
+                :is-create="isCreate"
+                :loading="isLoading"
+                @submit="onSubmit"
+                @close="closeModal"
+            />
+        </UModal>
+    </UCard>
 </template>
 
 <script setup lang="ts">
@@ -32,27 +32,27 @@ const isLoading = ref(false);
 const store = useCosmeticStore();
 
 function openCreateModal() {
-  isCreate.value = true;
-  selectedCosmetic.value = null;
-  showModal.value = true;
+    isCreate.value = true;
+    selectedCosmetic.value = null;
+    showModal.value = true;
 }
 function openEditModal(cosmetic: Cosmetic) {
-  isCreate.value = false;
-  selectedCosmetic.value = cosmetic;
-  showModal.value = true;
+    isCreate.value = false;
+    selectedCosmetic.value = cosmetic;
+    showModal.value = true;
 }
 function closeModal() {
-  showModal.value = false;
+    showModal.value = false;
 }
 async function onSubmit(form: CosmeticCreateReq | CosmeticUpdateReq) {
-  isLoading.value = true;
-  if (isCreate.value) {
-    await store.createCosmetic(form);
-  } else {
-    await store.updateCosmetic(selectedCosmetic.value?.id!, form);
-  }
-  isLoading.value = false;
-  closeModal();
-  await store.getAllCosmetics();
+    isLoading.value = true;
+    if (isCreate.value) {
+        await store.createCosmetic(form);
+    } else {
+        await store.updateCosmetic(selectedCosmetic.value?.id!, form);
+    }
+    isLoading.value = false;
+    closeModal();
+    await store.getAllCosmetics();
 }
 </script>

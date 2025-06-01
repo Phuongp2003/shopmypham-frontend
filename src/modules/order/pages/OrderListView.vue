@@ -12,6 +12,7 @@ import { ref, onMounted, h, resolveComponent } from 'vue';
 import { getAllOrdersApi } from '../order.api';
 import type { OrderResponse } from '../order.dto';
 import type { TableColumn } from '@nuxt/ui/dist/runtime/types';
+import { statusColor } from '../order.helper';
 
 const UBadge = resolveComponent('UBadge');
 const RouterLink = resolveComponent('RouterLink');
@@ -22,27 +23,6 @@ const error = ref('');
 
 function calcTotal(order: OrderResponse) {
     return order.details.reduce((sum, d) => sum + d.price * d.quantity, 0);
-}
-
-function statusColor(status: string) {
-    switch (status) {
-        case 'PENDING':
-        case 'COD':
-            return 'neutral';
-        case 'PROCESSING':
-        case 'cash':
-            return 'info';
-        case 'SHIPPED':
-            return 'warning';
-        case 'DELIVERED':
-        case 'MOMO':
-            return 'success';
-        case 'CANCELLED':
-        case 'FAILED':
-            return 'error';
-        default:
-            return 'neutral';
-    }
 }
 
 const columns: TableColumn<OrderResponse>[] = [

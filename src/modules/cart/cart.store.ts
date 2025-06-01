@@ -1,6 +1,12 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { getCartApi, addToCartApi, updateCartItemApi, removeCartItemApi, clearCartApi } from './cart.api';
+import {
+    getCartApi,
+    addToCartApi,
+    updateCartItemApi,
+    removeCartItemApi,
+    clearCartApi,
+} from './cart.api';
 import type { GetUserCartRes } from './cart.dto';
 
 export const useCartStore = defineStore('cart', () => {
@@ -23,7 +29,7 @@ export const useCartStore = defineStore('cart', () => {
     const addToCart = async (variantId: string, quantity: number) => {
         loading.value = true;
         try {
-            cart.value = await addToCartApi({ variantId, quantity });
+            cart.value = await addToCartApi(variantId, quantity);
             error.value = null;
         } catch (err: any) {
             error.value = err.message || 'Lỗi thêm vào giỏ hàng';
@@ -54,7 +60,9 @@ export const useCartStore = defineStore('cart', () => {
         try {
             await removeCartItemApi({ variantId });
             if (cart.value) {
-                cart.value.items = cart.value.items.filter((predicate) => predicate.variantId !== variantId);
+                cart.value.items = cart.value.items.filter(
+                    (predicate) => predicate.variantId !== variantId,
+                );
             }
             error.value = null;
         } catch (err: any) {

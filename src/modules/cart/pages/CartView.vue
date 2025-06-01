@@ -46,7 +46,11 @@
             <div class="flex justify-between items-center mt-8">
                 <div class="text-lg font-bold">
                     Tổng:
-                    {{ cart.items.reduce((sum, item) => sum + item.price * item.quantity, 0).toLocaleString() }}₫
+                    {{
+                        cart.items
+                            .reduce((sum, item) => sum + item.price * item.quantity, 0)
+                            .toLocaleString()
+                    }}₫
                 </div>
                 <router-link to="/checkout">
                     <button

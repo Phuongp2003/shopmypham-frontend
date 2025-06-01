@@ -18,13 +18,13 @@
                 <div class="flex items-center gap-2">
                     <b>Trạng thái đơn hàng:</b>
                     <UBadge :color="statusColor(order.status)">{{ order.status }}</UBadge>
-                    <UButton size="xs" color="info" @click="showStatusModal = true"
-                        >Cập nhật trạng thái</UButton
-                    >
+                    <UDropdownMenu :items="statusDropdownOptions">
+                        <UButton size="xs" color="info">Cập nhật trạng thái</UButton>
+                    </UDropdownMenu>
                     <b>Trạng thái thanh toán:</b>
-                    <UBadge :color="statusColor(order.payment?.status)">{{
-                        order.payment?.status
-                    }}</UBadge>
+                    <UBadge :color="statusColor(order.payment?.status)">
+                        {{ order.payment?.status }}
+                    </UBadge>
                 </div>
                 <div>
                     <b>Địa chỉ:</b> {{ order.address?.addressLine }}, {{ order.address?.district }},
@@ -43,73 +43,45 @@
             </div>
             <UButton color="primary" class="mt-2" @click="printInvoice">In hóa đơn</UButton>
         </div>
-        <UModal v-model="showStatusModal" title="Cập nhật trạng thái đơn hàng">
-            <template #content>
-                <div class="p-4">
-                    <UForm>
-                        <UFormField label="Trạng thái mới">
-                            <USelect v-model="newStatus" :items="statusOptions" class="w-full" />
-                        </UFormField>
-                    </UForm>
-                    <div class="flex justify-end gap-2 mt-4">
-                        <UButton variant="ghost" @click="showStatusModal = false">Hủy</UButton>
-                        <UButton color="primary" @click="updateStatus">Cập nhật</UButton>
-                    </div>
-                </div>
-            </template>
-        </UModal>
     </div>
 </template>
 <script setup lang="ts">
 import { ref, onMounted, h, resolveComponent } from 'vue';
-import { getOrderByIdApi, updateOrderApi } from '../../order.api';
+import { getOrderByIdApi, updateOrderStatusApi } from '../../order.api';
 import { useRoute } from 'vue-router';
 import type { OrderResponse } from '../../order.dto';
 import type { OrderStatus } from '../../order.types';
 import type { TableColumn } from '@nuxt/ui/dist/runtime/types';
+import { statusColor } from '../../order.helper';
 
 const UBadge = resolveComponent('UBadge');
 const UButton = resolveComponent('UButton');
 const UTable = resolveComponent('UTable');
-const UForm = resolveComponent('UForm');
-const UFormField = resolveComponent('UFormField');
-const USelect = resolveComponent('USelect');
-const UModal = resolveComponent('UModal');
 const toast = useToast();
 
 const order = ref<OrderResponse | null>(null);
 const loading = ref(false);
 const error = ref('');
 const route = useRoute();
-const showStatusModal = ref(false);
 const newStatus = ref('');
-
-const statusOptions = [
-    { label: 'PENDING', value: 'PENDING' },
-    { label: 'PROCESSING', value: 'PROCESSING' },
-    { label: 'SHIPPED', value: 'SHIPPED' },
-    { label: 'DELIVERED', value: 'DELIVERED' },
-    { label: 'CANCELLED', value: 'CANCELLED' },
+const statusDropdownOptions = [
+    {
+        label: 'Đang giao hàng',
+        icon: 'i-lucide-truck',
+        onSelect: () => updateStatus('SHIPPED'),
+    },
+    {
+        label: 'Đã giao hàng',
+        icon: 'i-lucide-check-circle',
+        onSelect: () => updateStatus('DELIVERED'),
+    },
+    {
+        label: 'Đã hủy',
+        icon: 'i-lucide-x-circle',
+        onSelect: () => updateStatus('CANCELLED'),
+    },
 ];
 
-function statusColor(status: string) {
-    switch (status) {
-        case 'PENDING':
-            return 'neutral';
-        case 'PROCESSING':
-            return 'info';
-        case 'SHIPPED':
-            return 'warning';
-        case 'DELIVERED':
-            return 'success';
-        case 'CANCELLED':
-            return 'error';
-        case 'FAILED':
-            return 'error';
-        default:
-            return 'gray';
-    }
-}
 function calcTotal(order: OrderResponse) {
     return order.details.reduce((sum, d) => sum + d.price * d.quantity, 0);
 }
@@ -129,14 +101,18 @@ const columns: TableColumn<any>[] = [
     },
 ];
 
-async function updateStatus() {
+async function updateStatus(status: string) {
     if (!order.value) return;
     try {
         loading.value = true;
-        await updateOrderApi(order.value.id, { status: newStatus.value as OrderStatus });
-        toast.add({ title: 'Cập nhật trạng thái thành công', color: 'success' });
-        order.value = await getOrderByIdApi(order.value.id);
-        showStatusModal.value = false;
+        await updateOrderStatusApi(order.value.id, status as OrderStatus)
+            .then(async () => {
+                toast.add({ title: 'Cập nhật trạng thái thành công', color: 'success' });
+                order.value = await getOrderByIdApi(order.value.id);
+            })
+            .catch((err) => {
+                toast.add({ title: err.message || 'Lỗi cập nhật trạng thái', color: 'error' });
+            });
     } catch (err: any) {
         toast.add({ title: err.message || 'Lỗi cập nhật trạng thái', color: 'error' });
     } finally {

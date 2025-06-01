@@ -5,23 +5,23 @@ import type { Paginated } from '@/common/api.type';
 import type { OrderStatus } from '@/modules/order/order.types';
 
 export interface CreateOrderDto {
-  addressId: string | null;
-  note?: string;
-  payment?: {
-    paymentMethod: string;
-    amount: number;
-    transactionId?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-    status?: 'PENDING' | 'COMPLETED' | 'FAILED';
-  };
-  details: {
-    variantId: string;
-    quantity: number;
-    price: number;
-    name: string;
-    image: string;
-  }[];
+    addressId: string | null;
+    note?: string;
+    payment?: {
+        paymentMethod: string;
+        amount: number;
+        transactionId?: string;
+        createdAt?: Date;
+        updatedAt?: Date;
+        status?: 'PENDING' | 'COMPLETED' | 'FAILED';
+    };
+    details: {
+        variantId: string;
+        quantity: number;
+        price: number;
+        name: string;
+        image: string;
+    }[];
 }
 
 export interface OrderQueryDto {
@@ -42,7 +42,7 @@ export interface OrderResponse {
         id: string;
         paymentMethod: string;
         amount: number;
-        status: 'PENDING' | 'COMPLETED' | 'FAILED'|'CANCELLED';
+        status: 'PENDING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
         transactionId?: string | null;
         createdAt: Date;
         updatedAt: Date;

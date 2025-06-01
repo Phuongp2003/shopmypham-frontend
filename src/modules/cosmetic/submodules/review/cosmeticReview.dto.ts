@@ -1,5 +1,5 @@
 import type { CosmeticReview } from './cosmeticReview.types';
-import type { Paginated, QueryParams} from '@/common/api.type';
+import type { Paginated, QueryParams } from '@/common/api.type';
 
 export type CosmeticReviewCreateReq = {
     cosmeticId: string;

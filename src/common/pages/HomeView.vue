@@ -37,7 +37,8 @@
                 <template #default="{ item: group }">
                     <div class="flex gap-4 w-full">
                         <div v-for="cosmetic in group" :key="cosmetic.id" class="flex-1">
-                            <RouterLink :to="`/cosmetic/${cosmetic.id}`"
+                            <RouterLink
+                                :to="`/cosmetic/${cosmetic.id}`"
                                 class="flex flex-col items-center p-4 mx-2 bg-gray-100 dark:bg-gray-900 rounded-lg shadow"
                             >
                                 <img

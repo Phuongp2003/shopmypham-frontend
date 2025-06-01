@@ -15,10 +15,7 @@
                 DPT Cosmetics
             </ULink>
             <div class="flex items-center gap-4">
-                <UNavigationMenu
-                    :items="navItems"
-                    class="w-auto justify-center"
-                />
+                <UNavigationMenu :items="navItems" class="w-auto justify-center" />
                 <UButton
                     :icon="isDark ? 'i-lucide-sun' : 'i-lucide-moon'"
                     color="primary"
@@ -34,7 +31,10 @@
                         icon="i-lucide-shopping-cart"
                         class="text-soft-primary hover:bg-pink-100/50 dark:hover:bg-pink-400/10 transition-colors duration-200"
                     />
-                    <span v-if="cartCount > 0" class="absolute -top-1 -right-1 bg-pink-500 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[20px] text-center border border-white dark:border-gray-900">
+                    <span
+                        v-if="cartCount > 0"
+                        class="absolute -top-1 -right-1 bg-pink-500 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[20px] text-center border border-white dark:border-gray-900"
+                    >
                         {{ cartCount }}
                     </span>
                 </div>

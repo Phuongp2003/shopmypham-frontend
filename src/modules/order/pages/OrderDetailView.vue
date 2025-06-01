@@ -7,14 +7,21 @@
         <div v-else>
             <div class="mb-4 space-y-1">
                 <div><b>Mã đơn:</b> {{ order.id }}</div>
-                <div><b>Ngày đặt:</b> {{ new Date(order.payment.createdAt).toLocaleString('vi-VN') }}</div>
+                <div>
+                    <b>Ngày đặt:</b> {{ new Date(order.payment.createdAt).toLocaleString('vi-VN') }}
+                </div>
                 <div class="flex items-center gap-2">
                     <b>Trạng thái đơn hàng:</b>
                     <UBadge :color="statusColor(order.status)">{{ order.status }}</UBadge>
                     <b>Trạng thái thanh toán:</b>
-                    <UBadge :color="statusColor(order.payment.status)">{{ order.payment.status }}</UBadge>
+                    <UBadge :color="statusColor(order.payment.status)">{{
+                        order.payment.status
+                    }}</UBadge>
                 </div>
-                <div><b>Địa chỉ:</b> {{ order.address?.addressLine }}, {{ order.address?.district }}, {{ order.address?.city }}</div>
+                <div>
+                    <b>Địa chỉ:</b> {{ order.address?.addressLine }}, {{ order.address?.district }},
+                    {{ order.address?.city }}
+                </div>
             </div>
             <div>
                 <h2 class="font-semibold mb-2">Sản phẩm</h2>
@@ -24,9 +31,20 @@
                 <b>Tổng tiền:</b> {{ calcTotal(order).toLocaleString() }}₫
             </div>
             <div class="my-4 text-lg font-semibold">
-              <b>Phương thức thanh toán:</b> {{ order.payment.paymentMethod }}
+                <b>Phương thức thanh toán:</b> {{ order.payment.paymentMethod }}
             </div>
-            <UButton v-if="order.payment.status === 'PENDING' && order.payment.paymentMethod === 'MOMO'" color="primary" @click="handlePay">Thanh toán</UButton>
+            <UButton
+                v-if="order.payment.status === 'PENDING' && order.payment.paymentMethod === 'MOMO'"
+                color="primary"
+                @click="handlePay"
+                >Thanh toán</UButton
+            >
+            <UButton
+                v-if="order.payment.status === 'PENDING' && order.payment.paymentMethod === 'BANK'"
+                color="primary"
+                @click="handleFakePayment"
+                >Thanh toán</UButton
+            >
         </div>
     </div>
 </template>
@@ -36,31 +54,15 @@ import { getOrderByIdApi } from '../order.api';
 import { useRoute } from 'vue-router';
 import type { OrderResponse } from '../order.dto';
 import type { TableColumn } from '@nuxt/ui/dist/runtime/types';
-import { paymentViaMomoApi } from '@/modules/payment/payment.api';
+import { paymentViaMomoApi, createPaymentApi } from '@/modules/payment/payment.api';
+import type { PaymentStatus } from '@/modules/payment/payment.types';
+import { statusColor } from '../order.helper';
 
 const UBadge = resolveComponent('UBadge');
 const order = ref<OrderResponse | null>(null);
 const loading = ref(false);
 const error = ref('');
 const route = useRoute();
-
-function statusColor(status: string) {
-    switch (status) {
-        case 'PENDING':
-            return 'neutral';
-        case 'PROCESSING':
-            return 'info';
-        case 'SHIPPED':
-            return 'warning';
-        case 'DELIVERED':
-            return 'success';
-        case 'CANCELLED':
-        case 'FAILED':
-            return 'error';
-        default:
-            return 'gray';
-    }
-}
 
 function calcTotal(order: OrderResponse) {
     return order.details.reduce((sum, d) => sum + d.price * d.quantity, 0);
@@ -70,7 +72,8 @@ const columns: TableColumn<any>[] = [
     {
         accessorKey: 'image',
         header: 'Ảnh',
-        cell: ({ row }: { row: { original: any } }) => h('img', { src: row.original.image, width: 50, height: 50 }),
+        cell: ({ row }: { row: { original: any } }) =>
+            h('img', { src: row.original.image, width: 50, height: 50 }),
     },
     {
         accessorKey: 'name',
@@ -89,20 +92,32 @@ const columns: TableColumn<any>[] = [
 const toast = useToast();
 const handlePay = () => {
     paymentViaMomoApi({
-      orderId: order.value?.id,
-      amount: calcTotal(order.value!),
+        orderId: order.value?.id,
+        amount: calcTotal(order.value!),
     }).then((res) => {
-      if (res.resultCode === 0) {
-        window.open(res.payUrl, '_blank');
-      } else {
-        toast.add({
-          title: 'Lỗi thanh toán',
-          description: res.message,
-          color: 'error',
-        });
-      }
+        if (res.resultCode === 0) {
+            window.open(res.payUrl, '_blank');
+        } else {
+            toast.add({
+                title: 'Lỗi thanh toán',
+                description: res.message,
+                color: 'error',
+            });
+        }
     });
-}
+};
+
+const handleFakePayment = () => {
+    const fakePaymentData = {
+        orderId: order.value?.id || '',
+        status: 'COMPLETED' as PaymentStatus,
+        paymentMethod: 'BANK',
+        amount: calcTotal(order.value!),
+    };
+    createPaymentApi(fakePaymentData).then((res) => {
+        console.log(res);
+    });
+};
 
 onMounted(async () => {
     loading.value = true;

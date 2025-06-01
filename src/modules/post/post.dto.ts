@@ -1,9 +1,5 @@
 import { z } from 'zod';
-import type {
-    PostCreateInput,
-    PostQueryParams,
-    PostUpdateInput,
-} from './post.types';
+import type { PostCreateInput, PostQueryParams, PostUpdateInput } from './post.types';
 
 export const postQueryParamsSchema = z.object({
     search: z.string().optional(),
@@ -20,5 +16,4 @@ export const postCreateSchema = z.object({
     published: z.boolean().optional(),
 }) satisfies z.ZodType<PostCreateInput>;
 
-export const postUpdateSchema =
-    postCreateSchema.partial() satisfies z.ZodType<PostUpdateInput>;
+export const postUpdateSchema = postCreateSchema.partial() satisfies z.ZodType<PostUpdateInput>;

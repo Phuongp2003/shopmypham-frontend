@@ -13,11 +13,15 @@ export const getAllOrdersApi = async (params: OrderQueryDto): Promise<PaginatedO
     return response.data;
 };
 
-export const getAllOrdersManagerApi = async (params: OrderQueryDto): Promise<PaginatedOrderResponse> => {
-  const response = await api.get<PaginatedOrderResponse>('/orders/admin', { params }).catch((err) => {
-      throw new Error(err.response.data.message);
-  });
-  return response.data;
+export const getAllOrdersManagerApi = async (
+    params: OrderQueryDto,
+): Promise<PaginatedOrderResponse> => {
+    const response = await api
+        .get<PaginatedOrderResponse>('/orders/admin', { params })
+        .catch((err) => {
+            throw new Error(err.response.data.message);
+        });
+    return response.data;
 };
 
 export const getOrderByIdApi = async (id: string): Promise<OrderResponse> => {
@@ -42,6 +46,11 @@ export const updateOrderApi = async (
         throw new Error(err.response.data.message);
     });
     return response.data;
+};
+export const updateOrderStatusApi = async (id: string, status: string): Promise<void> => {
+    await api.patch(`/orders/${id}`, { status }).catch((err) => {
+        throw new Error(err.response.data.message);
+    });
 };
 
 export const deleteOrderApi = async (id: string): Promise<void> => {

@@ -11,6 +11,13 @@
         <div class="font-medium text-center text-gray-800 dark:text-gray-100">
             {{ cosmetic.name }}
         </div>
+        <div class="flex items-center gap-4 my-3">
+            <div class="flex items-center gap-1">
+                <UIcon name="i-lucide-star" class="w-4 h-4 text-yellow-400 fill-current" />
+                <span class="text-sm font-medium">{{ cosmetic.averageRating || 0 }}</span>
+            </div>
+            <div class="text-sm text-soft-secondary">Còn {{ cosmetic.stock }} sản phẩm</div>
+        </div>
         <div class="flex flex-col items-center gap-2">
             <div class="font-medium text-sm text-center text-green-700 dark:text-green-400">
                 {{ formatPrice(cosmetic.price) }}₫

@@ -10,10 +10,15 @@ export const getCartApi = async (userId: string): Promise<GetUserCartRes> => {
     return response.data;
 };
 
-export const addToCartApi = async (variantId: string, quantity: number): Promise<GetUserCartRes> => {
-    const response = await api.put<GetUserCartRes>(`/cart/${variantId}`, { quantity }).catch((err) => {
-        throw new Error(err.response.data.message);
-    });
+export const addToCartApi = async (
+    variantId: string,
+    quantity: number,
+): Promise<GetUserCartRes> => {
+    const response = await api
+        .put<GetUserCartRes>(`/cart/${variantId}`, { quantity })
+        .catch((err) => {
+            throw new Error(err.response.data.message);
+        });
     return response.data;
 };
 

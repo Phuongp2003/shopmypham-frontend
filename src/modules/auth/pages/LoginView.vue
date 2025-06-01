@@ -135,12 +135,8 @@ function onSubmit(event: { data: LoginForm }) {
                 </div>
             </UForm>
             <div class="flex justify-center mt-4">
-              <UButton
-                  variant="outline"
-                  to="/"
-                  >Về trang chủ</UButton
-              >
-          </div>
+                <UButton variant="outline" to="/">Về trang chủ</UButton>
+            </div>
         </UCard>
     </div>
 </template>

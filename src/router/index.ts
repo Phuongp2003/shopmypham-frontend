@@ -33,11 +33,7 @@ const router = createRouter({
         {
             path: '/manager',
             name: 'manager-router',
-            children: [
-                ...userManagerRouter,
-                ...cosmeticManagerRouter,
-                ...orderManagerRouter,
-            ],
+            children: [...userManagerRouter, ...cosmeticManagerRouter, ...orderManagerRouter],
         },
         {
             path: '/:pathMatch(.*)*',

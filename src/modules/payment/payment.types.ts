@@ -16,7 +16,7 @@ export type PaymentStatus = 'PENDING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
 export type MomoPaymentRequest = {
     orderId: string;
     amount: number;
-}
+};
 
 export type MomoPaymentResponse = {
     partnerCode: string;
@@ -30,4 +30,4 @@ export type MomoPaymentResponse = {
     deeplink: string;
     qrCodeUrl: string;
     deeplinkMiniApp: string;
-}
+};

@@ -168,11 +168,7 @@ async function onSubmit(event: { data: SignupForm }) {
                 </div>
             </UForm>
             <div class="flex justify-center mt-4">
-                <UButton
-                    variant="outline"
-                    to="/"
-                    >Về trang chủ</UButton
-                >
+                <UButton variant="outline" to="/">Về trang chủ</UButton>
             </div>
         </UCard>
     </div>

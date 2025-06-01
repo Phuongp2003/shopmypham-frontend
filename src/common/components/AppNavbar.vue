@@ -8,12 +8,17 @@
         "
     >
         <div class="h-full px-4 flex items-center justify-between">
-            <AppSidebar />
             <div class="flex items-center gap-4">
-                <UNavigationMenu
-                    :items="navItems"
-                    class="w-auto justify-center"
-                />
+                <AppSidebar />
+                <ULink
+                    to="/"
+                    class="text-pink-gradient font-bold text-xl hover:scale-105 transition-transform duration-200"
+                >
+                    DPT Cosmetics
+                </ULink>
+            </div>
+            <div class="flex items-center gap-4">
+                <UNavigationMenu :items="navItems" class="w-auto justify-center" />
                 <UButton
                     :icon="isDark ? 'i-lucide-sun' : 'i-lucide-moon'"
                     color="primary"

@@ -53,7 +53,7 @@ import ManagerCosmeticBenefitsForm from '@/modules/cosmetic/components/manager/M
 import ManagerCosmeticBadgesForm from '@/modules/cosmetic/components/manager/ManagerCosmeticBadgesForm.vue';
 import ManagerShippingPolicyModal from '@/modules/cosmetic/components/manager/ManagerShippingPolicyModal.vue';
 import type { CosmeticCreateReq } from '../../cosmetic.dto';
-import router from '@/router'
+import router from '@/router';
 const cosmetic = useCosmeticCreateStore();
 const overlay = useOverlay();
 const route = useRoute();
@@ -72,7 +72,7 @@ async function openShippingPolicyModal() {
 }
 
 async function handleSubmit() {
-  console.log(cosmetic.form)
+    console.log(cosmetic.form);
     await cosmetic.submit('update', cosmeticId).then((res) => {
         if (res) {
             router.push('/manager/products/list');

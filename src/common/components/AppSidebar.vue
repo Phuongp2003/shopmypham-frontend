@@ -47,7 +47,7 @@ const menuItems = [
                 label: 'Nhà phân phối',
                 icon: 'i-lucide-truck',
                 to: '/manager/products/distributors',
-            }
+            },
         ],
     },
     {

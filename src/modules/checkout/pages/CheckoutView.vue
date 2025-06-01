@@ -26,10 +26,12 @@
                             v-model="selectedAddressId"
                             create-item
                             :loading="isLoading"
-                            :items="addresses.map((address) => ({
-                                ...address,
-                                label: `${address.addressLine}, ${address.district}, ${address.city}`,
-                            }))"
+                            :items="
+                                addresses.map((address) => ({
+                                    ...address,
+                                    label: `${address.addressLine}, ${address.district}, ${address.city}`,
+                                }))
+                            "
                             value-key="id"
                             placeholder="Chọn địa chỉ giao hàng"
                             class="w-full"
@@ -41,14 +43,21 @@
                     </template>
                 </UFormField>
                 <UFormField label="Phương thức thanh toán" name="paymentMethod" required>
-                    <USelectMenu v-model="paymentMethod" :items="paymentMethods" value-key="value" class="w-full">
+                    <USelectMenu
+                        v-model="paymentMethod"
+                        :items="paymentMethods"
+                        value-key="value"
+                        class="w-full"
+                    >
                     </USelectMenu>
                 </UFormField>
                 <div class="flex justify-between items-center mt-4">
                     <div class="text-lg font-bold">
                         Tổng:
                         {{
-                            cart.items.reduce((sum, item) => sum + item.price, 0).toLocaleString()
+                            cart.items
+                                .reduce((sum, item) => sum + item.price * item.quantity, 0)
+                                .toLocaleString()
                         }}₫
                     </div>
                     <UButton
@@ -79,8 +88,7 @@ const paymentMethod = ref('COD');
 const router = useRouter();
 
 // Address logic
-const { addresses, isLoading, selectedAddressId, fetchAddresses, addAddress } =
-    useUserAddresses();
+const { addresses, isLoading, selectedAddressId, fetchAddresses, addAddress } = useUserAddresses();
 
 const paymentMethods = ref([
     {
@@ -94,7 +102,7 @@ const paymentMethods = ref([
     {
         label: 'Thanh toán qua MoMo',
         value: 'MOMO',
-    }
+    },
 ]);
 
 // State cho UForm checkout
@@ -112,9 +120,9 @@ onMounted(() => {
 async function openCreateAddress() {
     const modal = overlay.create(CreateAddressModal);
     await modal.open().then((result: any) => {
-      if (result) {
-          addAddress(result.address as CreateAddressDto);
-      }
+        if (result) {
+            addAddress(result.address as CreateAddressDto);
+        }
     });
 }
 

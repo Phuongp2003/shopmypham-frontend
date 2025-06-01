@@ -1,5 +1,5 @@
 import type { QueryParams, Paginated } from '@/common/api.type';
-import type {  Cosmetic, CosmeticType } from './cosmetic.types';
+import type { Cosmetic, CosmeticType } from './cosmetic.types';
 import type { VariantResponse } from './submodules/option/cosmesticOptions.types';
 import type { CosmeticBenefit } from './submodules/benefit/cosmeticBenefit.types';
 import type { CosmeticBadge } from './submodules/badge/cosmeticBadge.types';
