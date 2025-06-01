@@ -1,9 +1,9 @@
 import FormData from 'form-data';
 
 class MyUploadAdapter {
-    constructor(loader, cloud_name) {
+    constructor(loader, cloud_name, path = '/file/upload') {
         this.loader = loader;
-        this.url = `${cloud_name}/file/upload`;
+        this.url = `${cloud_name}${path}`;
     }
 
     upload() {

@@ -246,13 +246,8 @@ const config = computed(() => {
         ],
         extraPlugins: [
             function (editor) {
-                /*************  ✨ Codeium Command ⭐  *************/
-                /**
-
-/******  13da8f8d-534b-4422-8380-165cbc8382b0  *******/ editor.plugins.get(
-                    'FileRepository',
-                ).createUploadAdapter = (loader) => {
-                    return new MyUploadAdapter(loader, import.meta.env.VITE_API_BASE_URL);
+                editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                    return new MyUploadAdapter(loader, import.meta.env.VITE_API_BASE_URL, '/upload');
                 };
             },
         ],

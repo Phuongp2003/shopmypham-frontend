@@ -89,6 +89,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import ImagePreview from './ImagePreview.vue';
+import { uploadImageApi } from '@/modules/upload/upload.api';
 
 const props = defineProps<{
     modelValue?: File | string;
@@ -190,13 +191,15 @@ async function handleFile(file: File) {
 
     // Simulate upload progress
     uploading.value = true;
-    for (let i = 0; i <= 100; i += 10) {
-        uploadProgress.value = i;
-        await new Promise((resolve) => setTimeout(resolve, 100));
+    try {
+        const res = await uploadImageApi(file);
+        emit('update:modelValue', res.url); // emit url thay vì file
+    } catch (e) {
+        error.value = 'Upload thất bại!';
+        emit('error', error.value);
+    } finally {
+        uploading.value = false;
     }
-    uploading.value = false;
-
-    emit('update:modelValue', file);
 }
 
 function onFileChange(event: Event) {
