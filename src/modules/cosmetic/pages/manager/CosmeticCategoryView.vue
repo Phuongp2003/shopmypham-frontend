@@ -21,7 +21,7 @@
       <CosmeticOptionTable @edit="openEditModal" @delete="onDeleteOption" />
       <UModal v-model="showModal">
         <CosmeticOptionForm
-          :option="selectedOption"
+          :option="selectedOption as CosmeticOption"
           :is-create="isCreate"
           :loading="isLoading"
           @submit="onSubmit"
@@ -37,6 +37,7 @@ import { ref } from 'vue';
 import CosmeticOptionTable from './CosmeticOptionTable.vue';
 import CosmeticOptionForm from './CosmeticOptionForm.vue';
 import { useCosmeticOptionStore } from '../../submodules/option/cosmeticOption.store';
+import type { CosmeticOption } from '../../submodules/option/cosmesticOptions.types';
 
 const cosmeticTypes = [
   'SKINCARE', 'MAKEUP', 'HAIRCARE', 'FRAGRANCE', 'BODYCARE', 'NAILCARE', 'OTHER'
@@ -44,7 +45,7 @@ const cosmeticTypes = [
 
 const showModal = ref(false);
 const isCreate = ref(true);
-const selectedOption = ref(null);
+const selectedOption = ref<CosmeticOption | null>(null);
 const isLoading = ref(false);
 const store = useCosmeticOptionStore();
 
@@ -66,7 +67,7 @@ async function onSubmit(form: any) {
   if (isCreate.value) {
     await store.createOption(form);
   } else {
-    await store.updateOption(selectedOption.value.id, form);
+    await store.updateOption(selectedOption.value?.id as string, form);
   }
   isLoading.value = false;
   closeModal();

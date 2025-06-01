@@ -26,6 +26,7 @@ export interface CosmeticResponse {
     specifications?: CosmeticSpecification[];
     createdAt: string;
     updatedAt: string;
+    type: CosmeticType;
 }
 
 export type Cosmetic = {
@@ -42,6 +43,7 @@ export type Cosmetic = {
   distributor: CosmeticDistributor;
   variants: CosmeticVariant[];
   specifications: CosmeticSpec[];
+  usageInstructions: string;
 };
 
 export type CosmeticType =

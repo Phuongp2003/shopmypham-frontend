@@ -1,45 +1,5 @@
 import type { Cosmetic } from '@/modules/cosmetic/cosmetic.types';
 import type { CosmeticOption } from '../option/cosmesticOptions.types';
-
-/**
- * @swagger
- * title: CosmeticVariant
- * type: object
- * properties:
- *   id:
- *     type: string
- *     description: ID biến thể
- *   name:
- *     type: string
- *     description: Tên biến thể
- *   cosmeticId:
- *     type: string
- *     description: ID mỹ phẩm
- *   sku:
- *     type: string
- *     description: Mã sản phẩm
- *   price:
- *     type: number
- *     description: Giá
- *   stock:
- *     type: number
- *     description: Số lượng
- *   createdAt:
- *     type: string
- *     format: date-time
- *     description: Ngày tạo
- *   updatedAt:
- *     type: string
- *     format: date-time
- *     description: Ngày cập nhật
- *   variantOptions:
- *     type: array
- *     items:
- *       $ref: '#/components/schemas/CosmeticVariantOption'
- *   cosmetic:
- *     type: object
- *     $ref: '#/components/schemas/Cosmetic'
- */
 export type CosmeticVariant = {
     id: string;
     cosmeticName: string;

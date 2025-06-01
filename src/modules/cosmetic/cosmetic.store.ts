@@ -4,6 +4,7 @@ import {
   getAllCosmeticsApi,
   createCosmeticApi,
   updateCosmeticApi,
+  deleteCosmeticApi,
 } from './cosmetic.api';
 import type { CosmeticCreateReq, CosmeticUpdateReq, GetAllCosmeticRes } from './cosmetic.dto';
 
@@ -65,6 +66,22 @@ export const useCosmeticStore = defineStore('cosmetics', () => {
     }
   };
 
+  const deleteCosmetic = async (id: string) => {
+    isLoading.value = true;
+    try {
+      await deleteCosmeticApi(id);
+      await getAllCosmetics();
+      toast.add({ title: 'Xoá mỹ phẩm thành công!', color: 'success' });
+    } catch (err) {
+      toast.add({
+        title: (err as Error).message || 'Có lỗi khi xoá mỹ phẩm!',
+        color: 'error',
+      });
+    } finally {
+      isLoading.value = false;
+    }
+  };
+
   return {
     cosmetics,
     isLoading,
@@ -75,5 +92,6 @@ export const useCosmeticStore = defineStore('cosmetics', () => {
     getAllCosmetics,
     createCosmetic,
     updateCosmetic,
+    deleteCosmetic,
   };
 });

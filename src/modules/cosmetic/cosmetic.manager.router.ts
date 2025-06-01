@@ -11,12 +11,12 @@ export default [
           {
             path: 'create',
             name: 'cosmetic-manager-create',
-            component: () => import('./pages/manager/CosmeticForm.vue'),
+            component: () => import('./pages/manager/CosmeticCreateView.vue'),
           },
           {
             path: ':id',
             name: 'cosmetic-manager-edit',
-            component: () => import('./pages/manager/CosmeticForm.vue'),
+            component: () => import('./pages/manager/CosmeticEditView.vue'),
           },
           // {
           //   path: 'categories',

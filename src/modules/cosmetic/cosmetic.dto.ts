@@ -1,16 +1,19 @@
 import type { QueryParams, Paginated } from '@/common/api.type';
-import type { VariantResponse, Cosmetic, CosmeticType } from './cosmetic.types';
+import type {  Cosmetic, CosmeticType } from './cosmetic.types';
+import type { VariantResponse } from './submodules/option/cosmesticOptions.types';
 
 export interface CosmeticRes {
     id: Cosmetic['id'];
     name: Cosmetic['name'];
     description: Cosmetic['description'];
     price: Cosmetic['price'];
+    type: Cosmetic['type'];
     distributor?: Cosmetic['distributor'];
     specifications: Cosmetic['specifications'];
     image: Cosmetic['image'];
     variants: VariantResponse[];
     stock: Cosmetic['stock'];
+    usageInstructions: Cosmetic['usageInstructions'];
 }
 export interface GetAllCosmeticRes {
     id: Cosmetic['id'];

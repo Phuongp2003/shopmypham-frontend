@@ -6,7 +6,7 @@ import type {
     CosmeticUpdateReq,
     PaginatedCosmeticRes,
 } from './cosmetic.dto';
-import type { Cosmetic } from './cosmetic.types';
+import type { Cosmetic, CosmeticResponse } from './cosmetic.types';
 
 export const getAllCosmeticsApi = async (
     req: CosmeticQueryParams,
@@ -19,8 +19,8 @@ export const getAllCosmeticsApi = async (
     return response.data;
 };
 
-export const getCosmeticByIdApi = async (id: string): Promise<Cosmetic> => {
-    const response = await api.get<Cosmetic>(`/cosmetics/${id}`).catch((err) => {
+export const getCosmeticByIdApi = async (id: string): Promise<CosmeticResponse> => {
+    const response = await api.get<CosmeticResponse>(`/cosmetics/${id}`).catch((err) => {
         throw new Error(err.response.data.message);
     });
     return response.data;
@@ -41,4 +41,10 @@ export const updateCosmeticApi = async (
         throw new Error(err.response.data.message);
     });
     return response.data;
+};
+
+export const deleteCosmeticApi = async (id: string): Promise<void> => {
+    await api.delete<void>(`/cosmetics/${id}`).catch((err) => {
+        throw new Error(err.response.data.message);
+    });
 };

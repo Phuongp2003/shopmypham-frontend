@@ -1,8 +1,9 @@
 import { api } from '@/plugins/axios';
 import type { CosmeticOptionCreateReq, CosmeticOptionUpdateReq } from './cosmesticOptions.dto';
+import type { CosmeticOption } from './cosmesticOptions.types';
 
-export const getAllOptionsApi = async () => {
-    const response = await api.get('/cosmetics/options').catch((err) => {
+export const getAllOptionsApi = async (): Promise<CosmeticOption[]> => {
+    const response = await api.get<CosmeticOption[]>('/cosmetics/options').catch((err) => {
         throw new Error(err.response.data.message);
     });
     return response.data;

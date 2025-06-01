@@ -33,6 +33,13 @@ export type CosmeticOption = {
     updatedAt: Date;
 };
 
+export type PaginatedCosmeticOption = {
+    options: CosmeticOption[];
+    total: number;
+    page: number;
+    limit: number;
+};
+
 export interface VariantOption {
     id: string;
     optionKey: string;
@@ -45,6 +52,7 @@ export interface VariantResponse {
     id: string;
     name: string;
     options: VariantOption[];
+    sku: string;
     inStock: number;
     image: string;
 }

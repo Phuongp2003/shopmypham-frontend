@@ -1,12 +1,19 @@
-export interface CosmeticBadge {
+export type CosmeticBadge = {
     id: string;
-    cosmeticId: string;
-    badgeType: string;
+    badgeType: BadgeType;
     title: string;
-    icon: string;
-    color: string;
+    icon?: string;
+    color?: string;
     isActive: boolean;
     orderIndex: number;
-    createdAt: string;
-    updatedAt: string;
-}
+    createdAt: Date;
+    updatedAt: Date;
+};
+
+export type BadgeType =
+    | 'MADE_IN'
+    | 'QUALITY'
+    | 'SHIPPING'
+    | 'RETURN_POLICY'
+    | 'WARRANTY'
+    | 'CERTIFICATION';

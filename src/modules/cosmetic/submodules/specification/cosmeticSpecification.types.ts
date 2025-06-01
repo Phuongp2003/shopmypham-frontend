@@ -33,7 +33,7 @@ export type CosmeticSpec = {
     specValue: string;
     createdAt: Date;
     updatedAt: Date;
-    cosmetic: Cosmetic;
+    cosmetic?: Cosmetic;
 };
 
 export interface CosmeticSpecification {

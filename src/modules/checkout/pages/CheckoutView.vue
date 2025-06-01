@@ -91,6 +91,10 @@ const paymentMethods = ref([
         label: 'Chuyển khoản ngân hàng',
         value: 'BANK',
     },
+    {
+        label: 'Thanh toán qua MoMo',
+        value: 'MOMO',
+    }
 ]);
 
 // State cho UForm checkout

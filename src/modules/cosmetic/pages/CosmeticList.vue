@@ -27,9 +27,6 @@
                             v-model="searchQuery"
                             placeholder="Tìm kiếm sản phẩm..."
                             icon="i-lucide-search"
-                            :ui="{
-                                icon: { trailing: { pointer: '' } },
-                            }"
                             class="w-full"
                         >
                             <template #trailing>

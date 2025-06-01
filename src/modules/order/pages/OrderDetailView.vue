@@ -26,7 +26,7 @@
             <div class="my-4 text-lg font-semibold">
               <b>Phương thức thanh toán:</b> {{ order.payment.paymentMethod }}
             </div>
-            <UButton v-if="order.payment.status === 'PENDING'" color="primary" @click="handlePay">Thanh toán</UButton>
+            <UButton v-if="order.payment.status === 'PENDING' && order.payment.paymentMethod === 'MOMO'" color="primary" @click="handlePay">Thanh toán</UButton>
         </div>
     </div>
 </template>

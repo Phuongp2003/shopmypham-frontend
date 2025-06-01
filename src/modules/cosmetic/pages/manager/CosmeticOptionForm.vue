@@ -17,8 +17,9 @@
 
 <script setup lang="ts">
 import { ref, watch, defineProps, defineEmits } from 'vue';
+import type { CosmeticOption } from '../../submodules/option/cosmesticOptions.types';
 const props = defineProps({
-  option: { type: Object, default: null },
+  option: { type: Object as PropType<CosmeticOption>, default: null },
   isCreate: { type: Boolean, default: true },
   loading: { type: Boolean, default: false },
 });
