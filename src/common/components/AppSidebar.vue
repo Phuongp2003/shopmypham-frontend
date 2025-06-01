@@ -34,17 +34,19 @@ const menuItems = [
             {
                 label: 'Sản phẩm',
                 icon: 'i-lucide-box',
-                to: '/manager/products',
+                to: '/manager/products/list',
             },
             {
                 label: 'Danh mục sản phẩm',
                 icon: 'i-lucide-list-ordered',
                 to: '/manager/products/categories',
+                disabled: true,
+                tooltip: 'Chức năng đang phát triển',
             },
             {
                 label: 'Nhà phân phối',
                 icon: 'i-lucide-truck',
-                to: '/manager/distributors',
+                to: '/manager/products/distributors',
             }
         ],
     },

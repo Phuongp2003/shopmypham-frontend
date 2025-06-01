@@ -1,6 +1,8 @@
 import type { QueryParams, Paginated } from '@/common/api.type';
 import type {  Cosmetic, CosmeticType } from './cosmetic.types';
 import type { VariantResponse } from './submodules/option/cosmesticOptions.types';
+import type { CosmeticBenefit } from './submodules/benefit/cosmeticBenefit.types';
+import type { CosmeticBadge } from './submodules/badge/cosmeticBadge.types';
 
 export interface CosmeticRes {
     id: Cosmetic['id'];
@@ -52,15 +54,12 @@ export type CosmeticCreateReq = {
     price: number;
     stock: number;
     type: CosmeticType;
+    image: string;
+    usageInstructions?: string;
     distributorId: string;
+    shippingPolicyId: string;
     specifications?: CosmeticSpecificationInput[];
     variants?: CosmeticVariantInput[];
-};
-
-export type CosmeticUpdateReq = Partial<Omit<CosmeticCreateReq, 'variants'>> & {
-    variants?: {
-        create?: CosmeticVariantInput[];
-        update?: (CosmeticVariantInput & { id: string })[];
-        delete?: string[];
-    };
+    benefits?: CosmeticBenefit[];
+    badges?: CosmeticBadge[];
 };

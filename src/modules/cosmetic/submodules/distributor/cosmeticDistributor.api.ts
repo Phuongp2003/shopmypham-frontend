@@ -18,7 +18,7 @@ export const getDistributorByIdApi = async (id: string) => {
 };
 
 export const createDistributorApi = async (data: CosmeticDistributorCreateReq) => {
-  const response = await api.post('/cosmetics/distributors/create', data)
+  const response = await api.post('/cosmetics/distributors', data)
   .catch((err) => {
             throw new Error(err.response.data.message);
         });

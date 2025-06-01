@@ -7,6 +7,8 @@ import { useCookies } from '@vueuse/integrations/useCookies';
 import { jwtDecode } from 'jwt-decode';
 import { setAccessToken } from '@/plugins/axios';
 
+const DOMAIN = import.meta.env.VITE_DOMAIN;
+
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
 
@@ -60,6 +62,8 @@ export const useAuthStore = defineStore('auth', () => {
     const logout = async () => {
         cookies.remove(ACCESS_TOKEN_KEY);
         cookies.remove(REFRESH_TOKEN_KEY);
+        cookies.remove(ACCESS_TOKEN_KEY, { path: '/', domain: DOMAIN }); // remove cookie in production
+        cookies.remove(REFRESH_TOKEN_KEY, { path: '/', domain: DOMAIN }); // remove cookie in production
         isAuthenticated.value = false;
         isCookiesLoaded.value = false;
         userPayload.value = null;

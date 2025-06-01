@@ -5,8 +5,8 @@ import { getAllOptionsApi } from '../submodules/option/cosmeticOption.api';
 import { getAllShippingPoliciesApi } from '../submodules/shipping/shippingPolicy.api';
 import { getAllBadgesApi } from '../submodules/badge/cosmeticBadge.api';
 import { createCosmeticApi, updateCosmeticApi } from '../cosmetic.api';
-import type { CosmeticCreateReq, CosmeticUpdateReq } from '../cosmetic.dto';
-const toast = useToast()
+import type { CosmeticCreateReq } from '../cosmetic.dto';
+const toast = useToast();
 export const useCosmeticCreateStore = defineStore('cosmetic-create', () => {
     // State chuẩn hóa đúng DTO tạo mới mỹ phẩm
     const form = reactive({
@@ -54,6 +54,23 @@ export const useCosmeticCreateStore = defineStore('cosmetic-create', () => {
     const options = reactive<{ label: string; value: string }[]>([]);
     const shippingPolicies = reactive<{ label: string; value: string }[]>([]);
     const distributors = reactive<{ label: string; value: string }[]>([]);
+
+    function init(data: CosmeticCreateReq) {
+        form.name = data.name;
+        form.description = data.description || '';
+        form.price = data.price;
+        form.stock = data.stock;
+        form.type = data.type;
+        form.image = data.image;
+        form.type = data.type;
+        form.usageInstructions = data.usageInstructions || '';
+        form.distributorId = data.distributorId;
+        form.shippingPolicyId = data.shippingPolicyId;
+        form.specifications = data.specifications || [];
+        form.variants = data.variants || [];
+        form.benefits = data.benefits || [];
+        form.badges = data.badges || [];
+    }
 
     // CRUD functions
     function addSpecification() {
@@ -104,7 +121,7 @@ export const useCosmeticCreateStore = defineStore('cosmetic-create', () => {
                 title: err.message,
                 color: 'red',
                 icon: 'i-heroicons-exclamation-triangle',
-            })
+            });
         });
         if (!res) return;
         options.push(
@@ -120,7 +137,7 @@ export const useCosmeticCreateStore = defineStore('cosmetic-create', () => {
                 title: err.message,
                 color: 'red',
                 icon: 'i-heroicons-exclamation-triangle',
-            })
+            });
         });
         shippingPolicies.push(...res.map((item: any) => ({ label: item.name, value: item.id })));
     }
@@ -130,9 +147,11 @@ export const useCosmeticCreateStore = defineStore('cosmetic-create', () => {
                 title: err.message,
                 color: 'red',
                 icon: 'i-heroicons-exclamation-triangle',
-            })
+            });
         });
-        distributors.push(...res.map((item: any) => ({ label: item.name, value: item.id })));
+        distributors.push(
+            ...res.distributors.map((item: any) => ({ label: item.name, value: item.id })),
+        );
     }
     async function fetchBadges() {
         const res = await getAllBadgesApi().catch((err) => {
@@ -140,7 +159,7 @@ export const useCosmeticCreateStore = defineStore('cosmetic-create', () => {
                 title: err.message,
                 color: 'red',
                 icon: 'i-heroicons-exclamation-triangle',
-            })
+            });
         });
         form.badges.push(...res.map((item: any) => ({ label: item.name, value: item.id })));
     }
@@ -173,41 +192,55 @@ export const useCosmeticCreateStore = defineStore('cosmetic-create', () => {
 
     // Validate (simple, cần custom thêm)
     function validate() {
-        if (!form.name) return false;
-        if (!form.price || form.price < 0) return false;
+        if (!form.name) {
+            toast.add({
+                title: 'Tên sản phẩm không được để trống',
+                color: 'red',
+                icon: 'i-heroicons-exclamation-triangle',
+            });
+            return false;
+        }
         return true;
     }
 
     // Submit (mock, cần thay bằng API thực tế)
     async function submit(type: 'create' | 'update', id?: string) {
-        if (!validate()) throw new Error('Dữ liệu không hợp lệ');
+        if (!validate()) {
+            toast.add({
+                title: 'Dữ liệu không hợp lệ',
+                color: 'red',
+                icon: 'i-heroicons-exclamation-triangle',
+            });
+            return;
+        }
+        console.log(form);
         if (type === 'create') {
             await createCosmeticApi(form as CosmeticCreateReq).catch((err) => {
                 toast.add({
                     title: err.message,
                     color: 'red',
                     icon: 'i-heroicons-exclamation-triangle',
-                })
+                });
             });
             return { ...form };
         } else if (type === 'update') {
-            await updateCosmeticApi(id as string, form as CosmeticUpdateReq).catch((err) => {
-              toast.add({
-                title: err.message,
-                color: 'red',
-                icon: 'i-heroicons-exclamation-triangle',
-            })
+            await updateCosmeticApi(id as string, form as CosmeticCreateReq).catch((err) => {
+                toast.add({
+                    title: err.message,
+                    color: 'red',
+                    icon: 'i-heroicons-exclamation-triangle',
+                });
             });
             return { ...form };
         }
     }
 
     function resetAll() {
-        reset()
-        options.length = 0
-        shippingPolicies.length = 0
-        distributors.length = 0
-        form.badges.length = 0
+        reset();
+        options.length = 0;
+        shippingPolicies.length = 0;
+        distributors.length = 0;
+        form.badges.length = 0;
     }
 
     return {
@@ -234,5 +267,6 @@ export const useCosmeticCreateStore = defineStore('cosmetic-create', () => {
         validate,
         submit,
         resetAll,
+        init,
     };
 });

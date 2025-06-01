@@ -4,7 +4,7 @@ export default [
       name: 'cosmetic-manager',
         children: [
           {
-            path: '',
+            path: 'list',
             name: 'cosmetic-manager-list',
             component: () => import('./pages/manager/CosmeticTable.vue'),
           },
@@ -18,16 +18,11 @@ export default [
             name: 'cosmetic-manager-edit',
             component: () => import('./pages/manager/CosmeticEditView.vue'),
           },
-          // {
-          //   path: 'categories',
-          //   name: 'cosmetic-manager-category',
-          //   component: () => import('./pages/manager/CosmeticCategoryView.vue'),
-          // },
-          // {
-          //   path: 'distributors',
-          //   name: 'cosmetic-manager-distributor',
-          //   component: () => import('./pages/manager/CosmeticDistributorView.vue'),
-          // }
+          {
+            path: 'distributors',
+            name: 'cosmetic-manager-distributor',
+            component: () => import('./pages/manager/CosmeticDistributorView.vue'),
+          }
       ]
     }
 ]

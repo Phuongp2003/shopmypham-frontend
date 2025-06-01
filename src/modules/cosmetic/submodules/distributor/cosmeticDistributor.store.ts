@@ -2,7 +2,6 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import {
   getAllDistributorsApi,
-  getDistributorByIdApi,
   createDistributorApi,
   updateDistributorApi,
   deleteDistributorApi,
@@ -15,17 +14,23 @@ export const useCosmeticDistributorStore = defineStore('cosmeticDistributors', (
   const isLoading = ref(false);
   const total = ref(0);
   const page = ref(1);
-  const limit = ref(10);
+  const limit = ref(8);
+  const search = ref('');
   const totalPages = ref(0);
 
-  const getAllDistributors = async (params: any = {}) => {
+  const getAllDistributors = async () => {
     isLoading.value = true;
     try {
+      const params = {
+        page: page.value,
+        limit: limit.value,
+        search: search.value,
+      };
       const res = await getAllDistributorsApi(params);
       distributors.value = res.items || res.distributors || [];
       total.value = res.total || 0;
       page.value = res.page || 1;
-      limit.value = res.limit || 10;
+      limit.value = res.limit || 1;
       totalPages.value = res.totalPages || 0;
     } catch (err) {
       toast.add({
@@ -91,6 +96,7 @@ export const useCosmeticDistributorStore = defineStore('cosmeticDistributors', (
     total,
     page,
     limit,
+    search,
     totalPages,
     getAllDistributors,
     createDistributor,

@@ -1,39 +1,110 @@
-# EasyTraffic_WebClient
+# Shop Mỹ Phẩm Web
 
-This template should help get you started developing with Vue 3 in Vite.
+- ĐỀ TÀI: Xây dựng hệ thống web bán mỹ phẩm
+- GIẢNG VIÊN HƯỚNG DẪN: ThS. Nguyễn Văn Hữu Hoàng
 
-## Recommended IDE Setup
+> [Repo backend](https://github.com/Phuongp2003/shopmypham-backend)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Giới thiệu
 
-## Type Support for `.vue` Imports in TS
+Shop Mỹ Phẩm Web là hệ thống quản lý và bán hàng mỹ phẩm hiện đại, xây dựng với Vue 3, Vite, Nuxt UI, Tailwind CSS, TypeScript và kiến trúc module hóa. Dự án hướng tới trải nghiệm người dùng tối ưu, giao diện đẹp, hỗ trợ dark/light mode, tích hợp quản lý sản phẩm, đơn hàng, người dùng, blog, giỏ hàng, thanh toán, v.v.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+- **Frontend:** Vue 3, Composition API, TypeScript, Vite
+- **UI:** Nuxt UI v3, Tailwind CSS v4
+- **Quản lý trạng thái:** Pinia, composables
+- **Định tuyến:** Vue Router (file-based)
+- **Kiểm thử:** Jest (cấu hình sẵn, chưa có test mẫu)
 
-## Customize configuration
+## Tính năng chính
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- Đăng ký/đăng nhập (hỗ trợ Google OAuth, JWT, refresh token)
+- Quản lý sản phẩm (CRUD, variant, badge, benefit, shipping, review...)
+- Quản lý đơn hàng, giỏ hàng, thanh toán
+- Quản lý người dùng, địa chỉ giao hàng
+- Blog/tin tức, bình luận
+- Quản lý qua trang quản trị (manager)
 
-## Project Setup
+## Cấu trúc thư mục
 
-```sh
+```
+shopmypham-web/
+├── src/
+│   ├── assets/         # Ảnh, CSS, font
+│   ├── common/         # Component, composable, utils dùng chung
+│   ├── layouts/        # Layout giao diện
+│   ├── modules/        # Module tính năng (auth, cart, cosmetic, order, ...)
+│   ├── plugins/        # Plugin Vue
+│   └── router/         # Định tuyến
+├── memory-bank/        # Ghi chú kỹ thuật, rule, todo, feature
+├── public/             # Tài nguyên tĩnh
+├── package.json        # Script, dependency
+└── ...
+```
+
+## Thiết lập & Chạy dự án
+
+### 1. Cài đặt thư viện
+
+Cài đặt toàn bộ dependency:
+
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### 2. Chạy môi trường phát triển
 
-```sh
+Khởi động server phát triển với hot reload:
+
+```bash
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### 3. Build production
 
-```sh
+Tạo bản build tối ưu để deploy:
+
+```bash
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### 4. Kiểm tra type (TypeScript)
 
-```sh
-npm run lint
+Kiểm tra lỗi type toàn dự án:
+
+```bash
+npm run type-check
 ```
+
+### 5. Xem thử bản build production
+
+Chạy thử bản build vừa tạo:
+
+```bash
+npm run preview
+```
+
+### 6. Format code
+
+Tự động format code theo chuẩn Prettier:
+
+```bash
+npm run format
+```
+
+### 7. Chạy kiểm thử (Jest)
+
+Chạy toàn bộ test (nếu có):
+
+```bash
+npm run test
+```
+
+## Script trong package.json
+
+- `dev`: Chạy server phát triển với Vite (hot reload)
+- `build`: Build production, gồm kiểm tra type (`type-check`) rồi build (`build-only`)
+- `preview`: Xem thử bản build production
+- `build-only`: Chỉ build (vite build)
+- `type-check`: Kiểm tra type với vue-tsc
+- `test`: Chạy kiểm thử với Jest (cần thêm test mẫu)
+- `format`: Format code trong src/ bằng Prettier

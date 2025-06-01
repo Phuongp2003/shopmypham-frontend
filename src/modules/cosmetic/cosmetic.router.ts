@@ -13,16 +13,6 @@ export default [
                 name: 'cosmetic-detail',
                 component: () => import('./pages/CosmeticDetail.vue'),
             },
-            {
-                path: ':id/edit',
-                name: 'cosmetic-edit',
-                component: () => import('./pages/CosmeticEdit.vue'),
-            },
-            {
-                path: 'create',
-                name: 'cosmetic-create',
-                component: () => import('./pages/CosmeticCreate.vue'),
-            },
         ],
     },
 ];
