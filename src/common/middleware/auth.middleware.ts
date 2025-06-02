@@ -4,7 +4,7 @@ import { useAuthStore } from '@/modules/auth/auth.store';
 export const authMiddleware: NavigationGuard = async (to, from, next) => {
     const authStore = useAuthStore();
     const authRoutes = ['/auth/login', '/auth/register', '/auth/google'];
-    const publicRoutes = ['/', '/about', '/contact', '/blog', '/blog/:id', '/auth/success'];
+    const publicRoutes = ['home', '/about', '/contact', 'post-public-list', 'post-detail', 'cosmetic-list', 'cosmetic-detail', 'auth-success', 'auth-fail'];
     // Allow access to public routes
     if (authRoutes.includes(to.fullPath)) {
         // If already logged in and trying to access public routes, redirect to home
@@ -13,7 +13,7 @@ export const authMiddleware: NavigationGuard = async (to, from, next) => {
         }
         return next(true);
     }
-    if (publicRoutes.includes(to.fullPath)) return next(true);
+    if (publicRoutes.includes(to.name as string)) return next(true);
 
     // Check if user is already logged in
     if (authStore.isAuthenticated) {
