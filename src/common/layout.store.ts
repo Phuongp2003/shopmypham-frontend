@@ -7,7 +7,7 @@ import { useAuthStore } from '@/modules/auth/auth.store';
 import type { User } from '@/modules/user/user.types';
 import router from '@/router';
 
-const metaData = await router.currentRoute.value.meta;
+const metaData = router.currentRoute.value.meta;
 export const useLayoutStore = defineStore('layoutControl', {
     state: () => ({
         currentLayout: markRaw(DefaultLayout) as Component,

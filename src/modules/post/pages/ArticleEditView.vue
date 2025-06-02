@@ -16,7 +16,7 @@
                             ref="stepper"
                             v-model="currentStep"
                             :ui="{
-                                header: 'bg-gray-800 p-4',
+                                header: 'dark:bg-gray-800 bg-pink-200 p-4',
                             }"
                             :items="steps"
                             class="mb-4"
