@@ -4,15 +4,11 @@
         <section
             class="w-full h-[60vh] flex items-center justify-center bg-white dark:bg-gray-900 mb-10"
         >
-            <UCard
-                class="w-full h-full flex items-center justify-center bg-transparent shadow-none border-none dark:bg-transparent"
+            <div
+                class="w-full h-full px-6 py-4 bg-transparent shadow-none border-none dark:bg-transparent"
             >
-                <img
-                    class="object-cover w-full h-full"
-                    src="https://placehold.co/1920x600?text=Banner"
-                    alt="Banner"
-                />
-            </UCard>
+                <img class="object-cover w-full h-full" src="/banner-beauty.jpg" alt="Banner" />
+            </div>
         </section>
 
         <!-- Featured Cosmetics Slider -->
@@ -20,7 +16,7 @@
             class="w-full h-[50vh] flex flex-col items-center justify-center bg-soft-elevated dark:bg-gray-900 py-8 mb-10"
         >
             <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-                Featured Cosmetics
+                Sản phẩm nổi bật
             </h2>
             <UCarousel
                 :items="groupedCosmetics"
@@ -28,7 +24,7 @@
                 :autoplay="{ delay: 2000 }"
                 loop
                 :ui="{
-                    item: 'basis-[70%] transition-opacity [&:not(.is-snapped)]:opacity-10',
+                    item: 'basis-[70%] transition-opacity [&:not(.is-snapped)]:opacity-10 py-4',
                     controls: 'absolute top-1/2 -translate-y-1/2 inset-x-12',
                 }"
                 class-names
@@ -36,7 +32,7 @@
             >
                 <template #default="{ item: group }">
                     <div class="flex gap-4 w-full">
-                        <div v-for="cosmetic in group" :key="cosmetic.id" class="flex-1">
+                        <div v-for="cosmetic in group" :key="cosmetic.id" class="flex-1 hover:scale-105 transition-all duration-200">
                             <RouterLink
                                 :to="`/cosmetic/${cosmetic.id}`"
                                 class="flex flex-col items-center p-4 mx-2 bg-gray-100 dark:bg-gray-900 rounded-lg shadow"
@@ -46,6 +42,27 @@
                                     :alt="cosmetic.name"
                                     class="w-40 h-40 object-cover rounded-lg mb-2"
                                 />
+                                <div class="flex items-center gap-4 mb-3">
+                                    <div class="flex items-center gap-1">
+                                        <UIcon
+                                            name="i-lucide-star"
+                                            class="w-4 h-4 text-yellow-400 fill-current"
+                                        />
+                                        <span class="text-sm font-medium">
+                                            {{ cosmetic.averageRating || 0 }}
+                                        </span>
+                                    </div>
+                                    <div class="text-sm text-soft-secondary">
+                                        Còn {{ cosmetic.stock }} sản phẩm
+                                    </div>
+                                </div>
+                                <div class="flex flex-col items-end gap-3">
+                                  <div
+                                      class="text-2xl font-bold text-pink-600 dark:text-pink-400"
+                                  >
+                                      {{ formatPrice(cosmetic.price) }}
+                                  </div>
+                              </div>
                                 <div
                                     class="font-medium text-center text-gray-800 dark:text-gray-100"
                                 >
@@ -56,22 +73,27 @@
                     </div>
                 </template>
             </UCarousel>
+            <div class="flex justify-center mt-5">
+                <UButton color="primary" to="/cosmetic/list" size="xl">Xem tất cả</UButton>
+            </div>
         </section>
 
         <!-- Top Blog Section -->
         <section
             class="w-full h-[60vh] flex flex-col items-center justify-center bg-soft-elevated dark:bg-gray-900 py-4 mb-10"
         >
-            <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Top Blog</h2>
-            <div class="grid grid-cols-2 gap-6 w-3/4 h-[90%]">
-                <!-- Blog 1: 2 rows, 1 col, vertical split -->
-                <div
-                    class="row-span-2 flex flex-col p-0 overflow-hidden bg-white dark:bg-gray-800 rounded-xl shadow h-full"
+            <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+                Bài viết nổi bật
+            </h2>
+            <div class="grid grid-cols-2 gap-6 w-3/4 h-[90%]" v-if="posts.length > 0">
+                <RouterLink
+                    :to="`/post/${posts[0].id}`"
+                    class="row-span-2 flex flex-col p-0 overflow-hidden bg-white dark:bg-gray-800 rounded-xl shadow h-full hover:scale-105 transition-all duration-200"
                 >
                     <div class="flex flex-col h-full">
                         <div class="flex-3/4 flex items-center justify-center overflow-hidden">
                             <img
-                                src="https://placehold.co/600x300?text=Blog+1"
+                                :src="posts[0].image"
                                 alt="Blog 1"
                                 class="object-cover w-full h-full"
                             />
@@ -80,57 +102,59 @@
                             <div
                                 class="font-semibold text-lg text-gray-900 dark:text-gray-100 mb-1"
                             >
-                                Blog Title 1
+                                {{ posts[0].title }}
                             </div>
                             <div class="text-gray-600 dark:text-gray-300 text-sm">
-                                This is a short description for Blog 1. Lorem ipsum dolor sit amet,
-                                consectetur adipiscing elit.
+                                {{ posts[0].description }}
                             </div>
                         </div>
                     </div>
-                </div>
+                </RouterLink>
                 <!-- Blog 2: 1 row, 1 col, horizontal split -->
-                <div
-                    class="flex flex-row items-stretch p-0 overflow-hidden bg-white dark:bg-gray-800 rounded-xl shadow h-full"
+                <RouterLink
+                    :to="`/post/${posts[1].id}`"
+                    class="flex flex-row items-stretch p-0 overflow-hidden bg-white dark:bg-gray-800 rounded-xl shadow h-full hover:scale-105 transition-all duration-200"
                 >
                     <div class="flex-1 flex items-center justify-center overflow-hidden">
                         <img
-                            src="https://placehold.co/300x300?text=Blog+2"
+                            :src="posts[1].image"
                             alt="Blog 2"
                             class="object-cover w-full h-full"
                         />
                     </div>
                     <div class="flex-1 flex flex-col justify-center px-4 py-2">
                         <div class="font-semibold text-lg text-gray-900 dark:text-gray-100 mb-1">
-                            Blog Title 2
+                            {{ posts[1].title }}
                         </div>
                         <div class="text-gray-600 dark:text-gray-300 text-sm">
-                            This is a short description for Blog 2. Pellentesque habitant morbi
-                            tristique senectus.
+                            {{ posts[1].description }}
                         </div>
                     </div>
-                </div>
+                </RouterLink>
                 <!-- Blog 3: 1 row, 1 col, horizontal split -->
-                <div
-                    class="flex flex-row items-stretch p-0 overflow-hidden bg-white dark:bg-gray-800 rounded-xl shadow h-full"
+                <RouterLink
+                    :to="`/post/${posts[2].id}`"
+                    class="flex flex-row items-stretch p-0 overflow-hidden bg-white dark:bg-gray-800 rounded-xl shadow h-full hover:scale-105 transition-all duration-200"
                 >
                     <div class="flex-1 flex items-center justify-center overflow-hidden">
                         <img
-                            src="https://placehold.co/300x300?text=Blog+3"
+                            :src="posts[2].image"
                             alt="Blog 3"
                             class="object-cover w-full h-full"
                         />
                     </div>
                     <div class="flex-1 flex flex-col justify-center px-4 py-2">
                         <div class="font-semibold text-lg text-gray-900 dark:text-gray-100 mb-1">
-                            Blog Title 3
+                            {{ posts[2].title }}
                         </div>
                         <div class="text-gray-600 dark:text-gray-300 text-sm">
-                            This is a short description for Blog 3. Etiam porta sem malesuada magna
-                            mollis euismod.
+                            {{ posts[2].description }}
                         </div>
                     </div>
-                </div>
+                </RouterLink>
+            </div>
+            <div class="flex justify-center mt-5">
+                <UButton color="primary" to="/post/list" size="xl">Xem tất cả</UButton>
             </div>
         </section>
     </div>
@@ -139,19 +163,11 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useCosmetic } from '@/modules/cosmetic/cosmetic.composable';
-// const cosmetics = [
-//     { id: 1, name: 'Cosmetic 1', img: 'https://placehold.co/300x300?text=Cosmetic+1' },
-//     { id: 2, name: 'Cosmetic 2', img: 'https://placehold.co/300x300?text=Cosmetic+2' },
-//     { id: 3, name: 'Cosmetic 3', img: 'https://placehold.co/300x300?text=Cosmetic+3' },
-//     { id: 4, name: 'Cosmetic 4', img: 'https://placehold.co/300x300?text=Cosmetic+4' },
-//     { id: 5, name: 'Cosmetic 5', img: 'https://placehold.co/300x300?text=Cosmetic+5' },
-//     { id: 6, name: 'Cosmetic 6', img: 'https://placehold.co/300x300?text=Cosmetic+6' },
-//     { id: 7, name: 'Cosmetic 7', img: 'https://placehold.co/300x300?text=Cosmetic+7' },
-//     { id: 8, name: 'Cosmetic 8', img: 'https://placehold.co/300x300?text=Cosmetic+8' },
-//     { id: 9, name: 'Cosmetic 9', img: 'https://placehold.co/300x300?text=Cosmetic+9' },
-// ];
+import { getAllPostsApi } from '@/modules/post/post.api';
+import type { PostResponse } from '@/modules/post/post.types';
 
-const { cosmetics, loading, error, getCosmetics } = useCosmetic();
+const { cosmetics, getCosmetics } = useCosmetic();
+const posts = ref<PostResponse[]>([]);
 
 // Group cosmetics into arrays of 3
 const groupedCosmetics = computed(() => {
@@ -162,10 +178,23 @@ const groupedCosmetics = computed(() => {
     return groups;
 });
 
-onMounted(() => {
-    getCosmetics({
+const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+    }).format(price);
+};
+
+onMounted(async () => {
+    await getCosmetics({
         page: 1,
         limit: 9,
     });
+    posts.value = (await getAllPostsApi({
+        page: 1,
+        limit: 3,
+    }).then((res) => {
+        return res.posts;
+    })) as PostResponse[];
 });
 </script>

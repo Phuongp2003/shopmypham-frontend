@@ -49,6 +49,7 @@ export interface OrderResponse {
     };
     details: {
         variantId: string;
+        cosmeticId: string;
         quantity: number;
         price: number;
     }[];

@@ -40,6 +40,11 @@
                         >
                         </USelectMenu>
                         <div v-else class="text-gray-500 mb-2">Bạn chưa có địa chỉ giao hàng.</div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <UButton color="primary" @click="openCreateAddress()" size="xs">
+                                Thêm địa chỉ
+                            </UButton>
+                        </div>
                     </template>
                 </UFormField>
                 <UFormField label="Phương thức thanh toán" name="paymentMethod" required>

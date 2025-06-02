@@ -1,13 +1,12 @@
 export interface CosmeticReview {
     id: string;
     cosmeticId: string;
+    orderId: string;
     userId: string;
     rating: number;
     title?: string;
     content?: string;
     userName?: string;
-    isVerified: boolean;
-    isApproved: boolean;
     createdAt: string;
     updatedAt: string;
 }

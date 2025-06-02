@@ -162,7 +162,7 @@
                         v-for="cosmetic in cosmetics"
                         :key="cosmetic.id"
                         :cosmetic="cosmetic"
-                        class="card-hover"
+                        class="card-hover hover:scale-105 transition-all duration-200"
                     />
                 </div>
 
@@ -171,9 +171,9 @@
                     <div
                         v-for="cosmetic in cosmetics"
                         :key="cosmetic.id"
-                        class="bg-soft-elevated rounded-lg shadow-sm border border-pink-200/30 dark:border-pink-400/20 p-6 hover:shadow-md transition-all duration-200"
+                        class="bg-soft-elevated rounded-lg shadow-sm border border-pink-200/30 dark:border-pink-400/20 p-6 hover:shadow-md hover:scale-105 transition-all duration-200"
                     >
-                        <div class="flex flex-col md:flex-row gap-4">
+                        <RouterLink :to="`/cosmetic/${cosmetic.id}`" class="flex flex-col md:flex-row gap-4 hover:bg-soft-elevated/50 transition-all duration-200">
                             <!-- Product Image -->
                             <div class="flex-shrink-0">
                                 <img
@@ -222,26 +222,11 @@
                                         >
                                             {{ formatPrice(cosmetic.price) }}
                                         </div>
-                                        <div class="flex gap-2">
-                                            <UButton
-                                                :to="`/cosmetic/${cosmetic.id}`"
-                                                variant="outline"
-                                                size="sm"
-                                            >
-                                                Xem chi tiết
-                                            </UButton>
-                                            <UButton
-                                                color="primary"
-                                                size="sm"
-                                                icon="i-lucide-shopping-cart"
-                                            >
-                                                Thêm vào giỏ
-                                            </UButton>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </RouterLink>
                     </div>
                 </div>
 

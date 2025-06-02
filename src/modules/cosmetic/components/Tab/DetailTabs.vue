@@ -75,7 +75,6 @@ const sortedBenefits = computed(() => {
 const approvedReviews = computed(() => {
     if (!props.cosmetic?.reviews) return [];
     return props.cosmetic.reviews
-        .filter((review) => review.isApproved)
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 });
 </script>
