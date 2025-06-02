@@ -16,12 +16,6 @@
 <script setup lang="ts">
 const menuItems = [
     {
-        label: 'Tổng quan',
-        icon: 'i-lucide-layout-dashboard',
-        to: '/manager/dashboard',
-        active: false,
-    },
-    {
         label: 'Quản lý bài viết',
         icon: 'i-lucide-newspaper',
         to: '/manager/post',

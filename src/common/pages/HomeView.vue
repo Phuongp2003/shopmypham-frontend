@@ -2,7 +2,7 @@
     <div class="flex flex-col min-h-screen w-full bg-gray-50 dark:bg-gray-900 mb-10">
         <!-- Banner -->
         <section
-            class="w-full h-[60vh] flex items-center justify-center bg-white dark:bg-gray-900 mb-10"
+            class="w-full min-h-[300px] max-h-[600px] h-auto flex items-center justify-center bg-white dark:bg-gray-900 mb-10"
         >
             <div
                 class="w-full h-full px-6 py-4 bg-transparent shadow-none border-none dark:bg-transparent"
@@ -13,7 +13,7 @@
 
         <!-- Featured Cosmetics Slider -->
         <section
-            class="w-full h-[50vh] flex flex-col items-center justify-center bg-soft-elevated dark:bg-gray-900 py-8 mb-10"
+            class="w-full min-h-[250px] max-h-[500px] h-auto flex flex-col items-center justify-center bg-soft-elevated dark:bg-gray-900 py-8 mb-10"
         >
             <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
                 Sản phẩm nổi bật
@@ -80,12 +80,12 @@
 
         <!-- Top Blog Section -->
         <section
-            class="w-full h-[60vh] flex flex-col items-center justify-center bg-soft-elevated dark:bg-gray-900 py-4 mb-10"
+            class="w-full min-h-[400px] max-h-[800px] h-auto flex flex-col items-center justify-center bg-soft-elevated dark:bg-gray-900 py-4 mb-10"
         >
             <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
                 Bài viết nổi bật
             </h2>
-            <div class="grid grid-cols-2 gap-6 w-3/4 h-[90%]" v-if="posts.length > 0">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl h-auto" v-if="posts.length > 0">
                 <RouterLink
                     :to="`/post/${posts[0].id}`"
                     class="row-span-2 flex flex-col p-0 overflow-hidden bg-white dark:bg-gray-800 rounded-xl shadow h-full hover:scale-105 transition-all duration-200"

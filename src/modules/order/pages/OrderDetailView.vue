@@ -45,7 +45,12 @@
                 @click="handleFakePayment"
                 >Thanh toán</UButton
             >
-            <UButton color="primary" @click="handleOpenReviewModal">Đánh giá</UButton>
+            <UButton
+                v-if="order.payment.status === 'COMPLETED' && order.status === 'DELIVERED'"
+                color="primary"
+                @click="handleOpenReviewModal"
+                >Đánh giá</UButton
+            >
         </div>
     </div>
 </template>
@@ -145,7 +150,6 @@ const columns: TableColumn<any>[] = [
         header: 'Đánh giá',
         cell: ({ row }: { row: { original: any } }) => {
             const review = getReview(row.original.cosmeticId);
-            console.log(review);
             if (review) {
                 return h(
                     UButton,
