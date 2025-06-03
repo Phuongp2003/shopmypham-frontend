@@ -4,13 +4,13 @@ import type { CosmeticReview } from '@/modules/cosmetic/submodules/review/cosmet
 const emit = defineEmits<{ close: [any] }>();
 
 const props = defineProps<{
-    review: CosmeticReview;
+    review?: CosmeticReview;
 }>();
 
 const form = reactive({
-    rating: props.review.rating || 0,
-    title: props.review.title || '',
-    content: props.review.content || '',
+    rating: props.review?.rating || 0,
+    title: props.review?.title || '',
+    content: props.review?.content || '',
 });
 const isSubmitting = ref(false);
 

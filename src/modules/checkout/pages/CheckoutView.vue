@@ -86,6 +86,7 @@ import { createOrderApi } from '@/modules/order/order.api';
 import { useUserAddresses } from '@/modules/user/submodules/address/address.composable';
 import CreateAddressModal from '@/modules/checkout/components/modal/CreateAddressModal.vue';
 import type { CreateAddressDto } from '@/modules/user/submodules/address/address.dto';
+import { createPaymentApi } from '@/modules/payment/payment.api';
 
 const cartStore = useCartStore();
 const { cart, clearCart } = cartStore;
@@ -132,12 +133,13 @@ async function openCreateAddress() {
 }
 
 async function submitOrder() {
-    if (!selectedAddressId.value) return;
+  if (!selectedAddressId.value) return;
+  const totalAmount = cart?.items.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
     await createOrderApi({
         addressId: selectedAddressId.value,
         payment: {
             paymentMethod: paymentMethod.value,
-            amount: cart?.items.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0,
+            amount: totalAmount,
         },
         details:
             cart?.items.map((item) => ({
@@ -145,6 +147,13 @@ async function submitOrder() {
                 quantity: item.quantity,
                 price: item.price,
             })) || [],
+    }).then(async (res) => {
+      await createPaymentApi({
+        orderId: res.id,
+        amount: totalAmount,
+        paymentMethod: 'BANK',
+        transactionId: 'NO',
+      })
     });
     await clearCart();
     router.push('/order/list');

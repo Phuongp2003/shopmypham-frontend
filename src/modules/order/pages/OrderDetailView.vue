@@ -177,15 +177,17 @@ const columns: TableColumn<any>[] = [
                             ),
                     ],
                 );
-            }
-            return h(
-                'UButton',
-                {
-                    color: 'primary',
-                    onClick: () => handleOpenReviewModal(row.original),
-                },
-                'Đánh giá',
-            );
+            } else
+                return h(
+                    UButton,
+                    {
+                        color: 'primary',
+                        variant: 'ghost',
+                        disabled: order.value?.payment.status !== 'COMPLETED' || order.value?.status !== 'DELIVERED',
+                        onClick: () => handleOpenReviewModal(row.original),
+                    },
+                    'Đánh giá',
+                );
         },
     },
 ];
