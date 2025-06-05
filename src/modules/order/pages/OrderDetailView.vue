@@ -156,7 +156,7 @@ const columns: TableColumn<any>[] = [
                     {
                         color: 'primary',
                         variant: 'ghost',
-                        onClick: () => handleOpenReviewModal(row.original, 'edit'),
+                        onClick: () => handleOpenReviewModal({...row.original,review}, 'edit'),
                     },
                     [
                         ...Array(review.rating)
